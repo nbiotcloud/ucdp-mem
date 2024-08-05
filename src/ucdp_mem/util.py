@@ -23,25 +23,23 @@
 #
 
 """
-Unified Chip Design Platform - Memories.
+Utilities.
 """
 
-from ucdp_glbl.attrs import Attr, Attrs, CastableAttrs, cast_attrs
-from ucdp_glbl.lane import Lane
+import math
 
-from .mem import AMemMod
-from .otp import OtpMod
-from .ram import RamMod
-from .rom import RomMod
+from uniquer import uniquetuple
 
-__all__ = [
-    "AMemMod",
-    "Attr",
-    "Attrs",
-    "cast_attrs",
-    "CastableAttrs",
-    "Lane",
-    "OtpMod",
-    "RamMod",
-    "RomMod",
-]
+
+def gcd(values):
+    """
+    Greatest common divider of `values`.
+
+    >>> gcd([1024, 768, 2048])
+    256
+    """
+    values = uniquetuple(values)
+    result = values[0]
+    for value in values[1:]:
+        result = math.gcd(result, value)
+    return result

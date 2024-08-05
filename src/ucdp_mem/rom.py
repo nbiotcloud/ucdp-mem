@@ -21,11 +21,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Basic Testing."""
-
-import ucdp_mem
 
 
-def test_examplefunc():
-    """Simple Testing."""
-    assert ucdp_mem.examplefunc(3, second=2) == 5
+"""Read-Only-Memory."""
+
+import ucdp as u
+
+from .mem import AMemMod
+
+
+class RomMod(AMemMod):
+    """Read-Only-Memory."""
+
+    writable: u.ClassVar[bool] = False

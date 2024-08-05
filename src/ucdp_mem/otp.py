@@ -21,27 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
+"""One-Time-Programmable Memory."""
 
-"""
-Unified Chip Design Platform - Memories.
-"""
-
-from ucdp_glbl.attrs import Attr, Attrs, CastableAttrs, cast_attrs
-from ucdp_glbl.lane import Lane
+import ucdp as u
 
 from .mem import AMemMod
-from .otp import OtpMod
-from .ram import RamMod
-from .rom import RomMod
 
-__all__ = [
-    "AMemMod",
-    "Attr",
-    "Attrs",
-    "cast_attrs",
-    "CastableAttrs",
-    "Lane",
-    "OtpMod",
-    "RamMod",
-    "RomMod",
-]
+
+class OtpMod(AMemMod):
+    """One-Time-Programmable Memory."""
+
+    writable: u.ClassVar[bool] = True

@@ -21,27 +21,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
+"""Random-Access-Memory."""
 
-"""
-Unified Chip Design Platform - Memories.
-"""
-
-from ucdp_glbl.attrs import Attr, Attrs, CastableAttrs, cast_attrs
-from ucdp_glbl.lane import Lane
+import ucdp as u
 
 from .mem import AMemMod
-from .otp import OtpMod
-from .ram import RamMod
-from .rom import RomMod
 
-__all__ = [
-    "AMemMod",
-    "Attr",
-    "Attrs",
-    "cast_attrs",
-    "CastableAttrs",
-    "Lane",
-    "OtpMod",
-    "RamMod",
-    "RomMod",
-]
+
+class RamMod(AMemMod):
+    """Random-Access-Memory."""
+
+    retention: bool = False
+    """Retention Capability."""
+
+    writable: u.ClassVar[bool] = True
+    rewritable: u.ClassVar[bool] = True
