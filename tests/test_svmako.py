@@ -74,21 +74,23 @@ class AllMod(u.AMod):
             um.Lane(name="two"),
         )
 
-        RomMod(self, "u_rom0", depth=128, width=8)
+        RomMod(self, "u_rom0", depth=100, width=8)
         RomMod(self, "u_rom1", size=8 * 1024, width=64)
         RomMod(self, "u_rom2", size=4 * 8 * 1024, width=64, accesslanes=accesslanes)
         RomMod(self, "u_rom3", size=8 * 1024, width=16, powerlanes=powerlanes)
         RomMod(self, "u_rom4", size="40KB", width=16, powerlanes=powerlanes, accesslanes=accesslanes)
-        RomMod(self, "u_rom5", size="40KB", width=18, powerlanes=powerlanes, accesslanes=accesslanes)
-        RomMod(self, "u_rom6", depth=1982, width=77, powerlanes=powerlanes, accesslanes=accesslanes)
+        RomMod(self, "u_rom5", depth=10240, width=18)
+        RomMod(self, "u_rom6", depth=1982, width=77)
 
-        RamMod(self, "u_ram0", depth=128, width=8)
+        RamMod(self, "u_ram0", depth=100, width=8)
         RamMod(self, "u_ram1", size=8 * 1024, width=64)
         RamMod(self, "u_ram2", size=4 * 8 * 1024, width=64, accesslanes=accesslanes)
         RamMod(self, "u_ram3", size=8 * 1024, width=16, powerlanes=powerlanes)
         RamMod(self, "u_ram4", size="40KB", width=16, powerlanes=powerlanes, accesslanes=accesslanes)
-        RamMod(self, "u_ram5", size="40KB", width=18, powerlanes=powerlanes, accesslanes=accesslanes)
-        RamMod(self, "u_ram6", depth=1982, width=77, powerlanes=powerlanes, accesslanes=accesslanes)
+        RamMod(self, "u_ram5", depth=10240, width=18)
+        RamMod(self, "u_ram6", depth=1982, width=77)
+        RamMod(self, "u_ram7", size=1024, width=64, slicewidth=8)
+        RamMod(self, "u_ram8", size=1024, width=68, slicewidth=4)
 
 
 def test_all(prjroot):
@@ -96,3 +98,10 @@ def test_all(prjroot):
     mod = AllMod()
     u.generate(mod, "*")
     assert_refdata(test_all, prjroot)
+
+
+def test_all_configured(prjroot, techconfig):
+    """All Modules with Configured."""
+    mod = AllMod()
+    u.generate(mod, "*")
+    assert_refdata(test_all_configured, prjroot)

@@ -32,10 +32,15 @@
 // Data Model: tests.test_svmako.RamMod
 //
 //
-// Org:         18204x18 (40959 bytes)
+// Org:         10240x18 (22.5 KB)
 // Wordmasks:   0x3FFFF
-// Accesslanes: one='8 KB', two='32 KB'
-// Powerlanes:  one='4 KB', two='36 KB'
+// Accesslanes: -
+// Powerlanes:  -
+// Constraints: -
+// Segmentation:
+//     y/x     0
+//      0  10240x18/1
+//     Total: 10240x18/1(22.5 KB)
 //
 // =============================================================================
 
@@ -45,20 +50,13 @@
 module all_ram5 ( // tests.test_svmako.RamMod
   // main_i
   input  wire                      main_clk_i,
-  input  wire                      main_rst_an_i,  // Async Reset (Low-Active)
+  input  wire                      main_rst_an_i, // Async Reset (Low-Active)
   // io_i
-  // io_one_i
-  input  wire                      io_one_ena_i,
-  input  wire  [$clog2(3639)-1:0]  io_one_addr_i,
-  input  wire                      io_one_wena_i,
-  input  wire  [17:0]              io_one_wdata_i,
-  output logic [17:0]              io_one_rdata_o,
-  // io_two_i
-  input  wire                      io_two_ena_i,
-  input  wire  [$clog2(14562)-1:0] io_two_addr_i,
-  input  wire                      io_two_wena_i,
-  input  wire  [17:0]              io_two_wdata_i,
-  output logic [17:0]              io_two_rdata_o
+  input  wire                      io_ena_i,
+  input  wire  [$clog2(10239)-1:0] io_addr_i,
+  input  wire                      io_wena_i,
+  input  wire  [17:0]              io_wdata_i,
+  output logic [17:0]              io_rdata_o
   // pwr_i
   // tech_i
 );

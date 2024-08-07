@@ -28,41 +28,57 @@
 //
 // =============================================================================
 //
-// Module:     tests.all_ram6
+// Module:     tests.all_ram4
 // Data Model: tests.test_svmako.RamMod
 //
 //
-// Org:         1982x77 (19076 bytes)
-// Wordmasks:   0xFFFFF, 0x7FFFF, 0x7FFFF, 0x7FFFF
-// Accesslanes: -
-// Powerlanes:  -
-// Constraints: -
+// Org:         20480x16 (40 KB)
+// Wordmasks:   0xFFFF
+// Accesslanes: one='8 KB', two='32 KB'
+// Powerlanes:  one='4 KB', two='36 KB'
+// Constraints: MemTechConstraints(max_depth=2048, max_width=32, depth_inc=32, width_inc=4)
 // Segmentation:
-//     y/x     0
-//      0  1982x77/1
-//     Total: 1982x77/1(19076 bytes)
+//     y/x             0
+//      0  2048x16/1,pwr=one,acc=one
+//      1  2048x16/1,pwr=two,acc=one
+//      2  2048x16/1,pwr=two,acc=two
+//      3  2048x16/1,pwr=two,acc=two
+//      4  2048x16/1,pwr=two,acc=two
+//      5  2048x16/1,pwr=two,acc=two
+//      6  2048x16/1,pwr=two,acc=two
+//      7  2048x16/1,pwr=two,acc=two
+//      8  2048x16/1,pwr=two,acc=two
+//      9  2048x16/1,pwr=two,acc=two
+//     Total: 20480x16/1(40 KB)
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module all_ram6 ( // tests.test_svmako.RamMod
+module all_ram4 ( // tests.test_svmako.RamMod
   // main_i
-  input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i, // Async Reset (Low-Active)
+  input  wire                      main_clk_i,
+  input  wire                      main_rst_an_i,  // Async Reset (Low-Active)
   // io_i
-  input  wire                     io_ena_i,
-  input  wire  [$clog2(1981)-1:0] io_addr_i,
-  input  wire                     io_wena_i,
-  input  wire  [76:0]             io_wdata_i,
-  output logic [76:0]             io_rdata_o
+  // io_one_i
+  input  wire                      io_one_ena_i,
+  input  wire  [$clog2(4095)-1:0]  io_one_addr_i,
+  input  wire                      io_one_wena_i,
+  input  wire  [15:0]              io_one_wdata_i,
+  output logic [15:0]              io_one_rdata_o,
+  // io_two_i
+  input  wire                      io_two_ena_i,
+  input  wire  [$clog2(16383)-1:0] io_two_addr_i,
+  input  wire                      io_two_wena_i,
+  input  wire  [15:0]              io_two_wdata_i,
+  output logic [15:0]              io_two_rdata_o
   // pwr_i
   // tech_i
 );
 
 
-endmodule // all_ram6
+endmodule // all_ram4
 
 `default_nettype wire
 `end_keywords

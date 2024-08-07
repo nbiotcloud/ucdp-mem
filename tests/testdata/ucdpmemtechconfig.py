@@ -21,16 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Testing Fixtures."""
+"""Memory Technology Configuration."""
 
-from pytest import fixture
+from ucdp_mem import MemTechConstraints
 
 
-@fixture()
-def myfixture(tmp_path):
-    """Example Fixture."""
-    mytmp_path = tmp_path / "mysub"
-    mytmp_path.mkdir(parents=True)
-    (mytmp_path / "myfile.txt").write_text("filecontent")
+def get_ramtechconstraints(hiername: str) -> MemTechConstraints:
+    """Memory Technology Constraints."""
+    if not hiername.endswith("ram6"):
+        return MemTechConstraints(max_depth=2048, max_width=32, depth_inc=32, width_inc=4)
 
-    yield mytmp_path
+    return MemTechConstraints()

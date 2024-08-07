@@ -25,12 +25,25 @@
 
 """Read-Only-Memory."""
 
+from functools import cached_property
+
 import ucdp as u
 
 from .mem import AMemMod
+from .memtechconstraints import MemTechConstraints
 
 
 class RomMod(AMemMod):
     """Read-Only-Memory."""
 
     writable: u.ClassVar[bool] = False
+
+    @cached_property
+    def memtechconstraints(self) -> MemTechConstraints | None:
+        """Memory Technology Constraints."""
+        try:
+            import ucdpmemtechconfig
+
+            return ucdpmemtechconfig.get_romtechconstraints(self.hiername)
+        except (ImportError, AttributeError):
+            return None

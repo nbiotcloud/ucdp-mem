@@ -36,7 +36,7 @@
 // Wordmasks:   0xFFFFF, 0x7FFFF, 0x7FFFF, 0x7FFFF
 // Accesslanes: -
 // Powerlanes:  -
-// Constraints: -
+// Constraints: MemTechConstraints()
 // Segmentation:
 //     y/x     0
 //      0  1982x77/1

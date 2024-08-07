@@ -28,41 +28,42 @@
 //
 // =============================================================================
 //
-// Module:     tests.all_ram6
+// Module:     tests.all_ram8
 // Data Model: tests.test_svmako.RamMod
 //
 //
-// Org:         1982x77 (19076 bytes)
-// Wordmasks:   0xFFFFF, 0x7FFFF, 0x7FFFF, 0x7FFFF
+// Org:         120x68 (1020 bytes)
+// Wordmasks:   0x1FFFF, 0x1FFFF, 0x1FFFF, 0x1FFFF
 // Accesslanes: -
 // Powerlanes:  -
-// Constraints: -
+// Constraints: MemTechConstraints(max_depth=2048, max_width=32, depth_inc=32, width_inc=4)
 // Segmentation:
-//     y/x     0
-//      0  1982x77/1
-//     Total: 1982x77/1(19076 bytes)
+//     y/x      2             1             0
+//      0  120(128)x4/1 120(128)x32/1 120(128)x32/1
+//     Total: 120x68/17(1020 bytes)
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module all_ram6 ( // tests.test_svmako.RamMod
+module all_ram8 ( // tests.test_svmako.RamMod
   // main_i
-  input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i, // Async Reset (Low-Active)
+  input  wire                    main_clk_i,
+  input  wire                    main_rst_an_i, // Async Reset (Low-Active)
   // io_i
-  input  wire                     io_ena_i,
-  input  wire  [$clog2(1981)-1:0] io_addr_i,
-  input  wire                     io_wena_i,
-  input  wire  [76:0]             io_wdata_i,
-  output logic [76:0]             io_rdata_o
+  input  wire                    io_ena_i,
+  input  wire  [$clog2(119)-1:0] io_addr_i,
+  input  wire                    io_wena_i,
+  input  wire  [67:0]            io_wdata_i,
+  output logic [67:0]            io_rdata_o,
+  input  wire  [16:0]            io_sel_i
   // pwr_i
   // tech_i
 );
 
 
-endmodule // all_ram6
+endmodule // all_ram8
 
 `default_nettype wire
 `end_keywords

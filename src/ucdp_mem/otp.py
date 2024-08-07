@@ -23,12 +23,25 @@
 #
 """One-Time-Programmable Memory."""
 
+from functools import cached_property
+
 import ucdp as u
 
 from .mem import AMemMod
+from .memtechconstraints import MemTechConstraints
 
 
 class OtpMod(AMemMod):
     """One-Time-Programmable Memory."""
 
     writable: u.ClassVar[bool] = True
+
+    @cached_property
+    def memtechconstraints(self) -> MemTechConstraints | None:
+        """Memory Technology Constraints."""
+        try:
+            import ucdpmemtechconfig
+
+            return ucdpmemtechconfig.get_otptechconstraints(self.hiername)
+        except (ImportError, AttributeError):
+            return None

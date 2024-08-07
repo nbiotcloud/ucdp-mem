@@ -21,31 +21,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Random-Access-Memory."""
 
-from functools import cached_property
+"""
+Technology Memory Segmentation Constraints.
+"""
 
 import ucdp as u
-
-from .mem import AMemMod
-from .memtechconstraints import MemTechConstraints
+from pydantic import PositiveInt
 
 
-class RamMod(AMemMod):
-    """Random-Access-Memory."""
+class MemTechConstraints(u.LightObject):
+    """
+    Technology Memory Segmentation Constraints.
+    """
 
-    retention: bool = False
-    """Retention Capability."""
-
-    writable: u.ClassVar[bool] = True
-    rewritable: u.ClassVar[bool] = True
-
-    @cached_property
-    def memtechconstraints(self) -> MemTechConstraints | None:
-        """Memory Technology Constraints."""
-        try:
-            import ucdpmemtechconfig
-
-            return ucdpmemtechconfig.get_ramtechconstraints(self.hiername)
-        except (ImportError, AttributeError):
-            return None
+    max_depth: PositiveInt | None = None
+    max_width: PositiveInt | None = None
+    depth_inc: PositiveInt | None = None
+    width_inc: PositiveInt | None = None

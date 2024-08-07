@@ -30,9 +30,11 @@ from ucdp_glbl.attrs import Attr, Attrs, CastableAttrs, cast_attrs
 from ucdp_glbl.lane import Lane
 
 from .mem import AMemMod
+from .memtechconstraints import MemTechConstraints
 from .otp import OtpMod
 from .ram import RamMod
 from .rom import RomMod
+from .segmentation import Segment, Segmentation
 
 __all__ = [
     "AMemMod",
@@ -44,4 +46,7 @@ __all__ = [
     "OtpMod",
     "RamMod",
     "RomMod",
+    "Segment",
+    "Segmentation",
+    "MemTechConstraints",
 ]

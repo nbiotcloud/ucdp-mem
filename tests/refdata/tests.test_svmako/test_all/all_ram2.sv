@@ -36,6 +36,13 @@
 // Wordmasks:   0xFFFFFFFF, 0xFFFFFFFF
 // Accesslanes: one='8 KB', two='24 KB'
 // Powerlanes:  -
+// Constraints: -
+// Segmentation:
+//     y/x         0
+//      0  1024x64/1,acc=one
+//      1  1024x64/1,acc=two
+//      2  2048x64/1,acc=two
+//     Total: 4096x64/1(32 KB)
 //
 // =============================================================================
 

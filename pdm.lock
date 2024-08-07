@@ -5,7 +5,7 @@
 groups = ["default", "checktypes", "doc", "format", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:66b5eef31937af540cc11ea0f77bd21dd85f40fe9f4cd482eba3d696b61c571f"
+content_hash = "sha256:650cf0a6f1f9b188b5e4b208b9637907d2820c622037ed18dba01e6f9332ec90"
 
 [[metadata.targets]]
 requires_python = ">=3.10.0,<4.0"
@@ -326,6 +326,15 @@ dependencies = [
 files = [
     {file = "coveralls-3.3.1-py2.py3-none-any.whl", hash = "sha256:f42015f31d386b351d4226389b387ae173207058832fbf5c8ec4b40e27b16026"},
     {file = "coveralls-3.3.1.tar.gz", hash = "sha256:b32a8bb5d2df585207c119d6c01567b81fba690c9c10a753bfe27a335bfc43ea"},
+]
+
+[[package]]
+name = "defaultlist"
+version = "1.0.0"
+summary = "collections.defaultdict equivalent implementation of list."
+groups = ["default"]
+files = [
+    {file = "defaultlist-1.0.0.tar.gz", hash = "sha256:58cec08e2b1bd8a1a39e7a78dbbf6f66250258f461eb9b9ac0cc3eb78d3a0aca"},
 ]
 
 [[package]]
@@ -1137,7 +1146,7 @@ name = "pyreadline3"
 version = "3.4.1"
 summary = "A python implementation of GNU readline."
 groups = ["default", "test"]
-marker = "sys_platform == \"win32\" and python_version >= \"3.8\""
+marker = "sys_platform == \"win32\""
 files = [
     {file = "pyreadline3-3.4.1-py3-none-any.whl", hash = "sha256:b0efb6516fd4fb07b45949053826a62fa4cb353db5be2bbb4a7aa1fdd1e345fb"},
     {file = "pyreadline3-3.4.1.tar.gz", hash = "sha256:6f3d1f7b8a31ba32b73917cefc1f28cc660562f39aea8646d30bd6eff21f7bae"},
@@ -1474,7 +1483,7 @@ files = [
 
 [[package]]
 name = "ucdp"
-version = "0.14.0"
+version = "0.16.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform"
 groups = ["default", "test"]
@@ -1493,36 +1502,37 @@ dependencies = [
     "uniquer>=1.0.2",
 ]
 files = [
-    {file = "ucdp-0.14.0-py3-none-any.whl", hash = "sha256:4911b7a659012d23fef2344642325d0bac3d5141faaabd84a54b85553f42d033"},
-    {file = "ucdp-0.14.0.tar.gz", hash = "sha256:8846b5b2759a19a0d4f0bc1993ab51659a0f53e34013e0b81a1dbb4664e815df"},
+    {file = "ucdp-0.16.0-py3-none-any.whl", hash = "sha256:ec7409e0e70cca17a4b8a8eda85a292c02f2d50cd91b39ffc34fc17e9913bb8d"},
+    {file = "ucdp-0.16.0.tar.gz", hash = "sha256:d1ad0e4bebb2d4b5c6ee061c01a1d93b00fb917c99706d0e3f943e7271473b7d"},
 ]
 
 [[package]]
 name = "ucdp-addr"
-version = "1.2.0"
+version = "1.3.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Address Map"
 groups = ["default"]
 dependencies = [
-    "ucdp>=0.13.0",
+    "ucdp-glbl>=1.1.1",
+    "ucdp>=0.16.0",
 ]
 files = [
-    {file = "ucdp_addr-1.2.0-py3-none-any.whl", hash = "sha256:c58650995c5b9f2709bfa29d2fb8c8832220a0ad6e66a16ba860c5f6b515e100"},
-    {file = "ucdp_addr-1.2.0.tar.gz", hash = "sha256:06d959a8c769df2982c1844d2ee397d05e997351ccddb8a90b1ec1b0d9dde3ae"},
+    {file = "ucdp_addr-1.3.0-py3-none-any.whl", hash = "sha256:2e81e90787cad32545726dd8db7ee245f553833bf22e779a8ecaf8884f7aa9cb"},
+    {file = "ucdp_addr-1.3.0.tar.gz", hash = "sha256:c42e3158e684db25275fc1ac975e5739d51ec520684bfa5cd2b3ff619909ed41"},
 ]
 
 [[package]]
 name = "ucdp-glbl"
-version = "1.0.0"
+version = "1.1.1"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Global"
 groups = ["default"]
 dependencies = [
-    "ucdp>=0.8.0",
+    "ucdp>=0.15.1",
 ]
 files = [
-    {file = "ucdp_glbl-1.0.0-py3-none-any.whl", hash = "sha256:ef3ff9c1d68ddc5030523e0c6675d3c14103ec6f4a29892f6365ca2a114e30bf"},
-    {file = "ucdp_glbl-1.0.0.tar.gz", hash = "sha256:5550b3d141dda6db2c6962500d38649de15e8988c215db66da1ad388222499e1"},
+    {file = "ucdp_glbl-1.1.1-py3-none-any.whl", hash = "sha256:c57fd838632f4a18207de98cbd776cdbfebad6bd45ba45b059606841b67bbe51"},
+    {file = "ucdp_glbl-1.1.1.tar.gz", hash = "sha256:f735cd714258a9ea44bcefd4e3bab87dbc370a6d8c5b5241914299696de8f0ab"},
 ]
 
 [[package]]

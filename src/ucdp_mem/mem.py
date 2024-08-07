@@ -26,23 +26,36 @@
 Base Memory.
 """
 
+from abc import abstractmethod
 from functools import cached_property
 
 import ucdp as u
+from makolator.helper import indent
+from pydantic import PositiveInt
 from ucdp_addr.addrspace import Addrspace
 from ucdp_addr.util import calc_depth_size
 from ucdp_glbl.lane import Lanes, fill_lanes
+from ucdp_glbl.mem import calc_slicewidths
 
+from .memtechconstraints import MemTechConstraints
+from .segmentation import Segmentation
 from .types import LanesMemIoType, MemIoType, MemPwrType, MemTechType, SliceWidths
 from .wordmasks import Wordmasks, cast_wordmasks, width_to_wordmasks
+
+try:
+    import ucdpmemtechconfig
+except ImportError:
+    ucdpmemtechconfig = None
+
+indent4 = indent(4)
 
 
 class AMemMod(u.ATailoredMod):
     """Memory Module."""
 
-    width: int = 32
+    width: PositiveInt
     """Width in Bits."""
-    depth: int = u.Field(repr=False)
+    depth: PositiveInt = u.Field(repr=False)
     """Number of words."""
     size: u.Bytes
     """Size in Bytes."""
@@ -61,12 +74,14 @@ class AMemMod(u.ATailoredMod):
     def __init__(
         self,
         *args,
-        width: int,
-        depth: int | None = None,
+        width: PositiveInt,
+        depth: PositiveInt | None = None,
         size: u.Bytes | None = None,
         wordmasks: Wordmasks | None = None,
         accesslanes: Lanes | None = None,
         powerlanes: Lanes | None = None,
+        slicewidths: SliceWidths | None = None,
+        slicewidth: int | u.Expr | None = None,
         **kwargs,
     ):
         depth, size = calc_depth_size(width, depth, size)
@@ -74,6 +89,10 @@ class AMemMod(u.ATailoredMod):
         wordmasks = cast_wordmasks(wordmasks, width=width) if wordmasks else width_to_wordmasks(width)
         accesslanes = fill_lanes(accesslanes, size) if accesslanes else None
         powerlanes = fill_lanes(powerlanes, size) if powerlanes else None
+        if slicewidth and slicewidths:
+            raise ValueError("'slicewidth' and 'slicewidths' are mutally exclusive.")
+        if slicewidth:
+            slicewidths = calc_slicewidths(width, slicewidth)
         super().__init__(
             *args,
             width=width,
@@ -82,6 +101,7 @@ class AMemMod(u.ATailoredMod):
             accesslanes=accesslanes,
             powerlanes=powerlanes,
             wordmasks=wordmasks,
+            slicewidths=slicewidths,
             **kwargs,
         )
 
@@ -123,15 +143,37 @@ class AMemMod(u.ATailoredMod):
         """Address Space."""
         return Addrspace(name=self.hiername, width=self.width, depth=self.depth)
 
+    @cached_property
+    @abstractmethod
+    def memtechconstraints(self) -> MemTechConstraints | None:
+        """Memory Technology Constraints."""
+
+    @cached_property
+    def segmentation(self) -> Segmentation:
+        """Physical Memory Segmentation."""
+        constraints = self.memtechconstraints
+        return Segmentation.create(
+            width=self.width,
+            depth=self.depth,
+            slicewidths=self.slicewidths,
+            accesslanes=self.accesslanes,
+            powerlanes=self.powerlanes,
+            constraints=constraints,
+        )
+
     def get_overview(self) -> str:
         """Overview."""
         wordmasks = ", ".join(str(mask) for mask in self.wordmasks)
         accesslanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.accesslanes) if self.accesslanes else "-"
         powerlanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.powerlanes) if self.powerlanes else "-"
+        memtechconstraints = self.memtechconstraints or "-"
         lines = [
             f"Org:         {self.addrspace.org}",
             f"Wordmasks:   {wordmasks}",
             f"Accesslanes: {accesslanes}",
             f"Powerlanes:  {powerlanes}",
+            f"Constraints: {memtechconstraints}",
+            "Segmentation:",
+            indent4(self.segmentation.get_overview()),
         ]
         return "\n".join(lines)
