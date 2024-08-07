@@ -28,6 +28,7 @@
 from functools import cached_property
 
 import ucdp as u
+from ucdp_addr.addrspace import RO, Access
 
 from .mem import AMemMod
 from .memtechconstraints import MemTechConstraints
@@ -36,7 +37,7 @@ from .memtechconstraints import MemTechConstraints
 class RomMod(AMemMod):
     """Read-Only-Memory."""
 
-    writable: u.ClassVar[bool] = False
+    access: u.ClassVar[Access] = RO
 
     @cached_property
     def memtechconstraints(self) -> MemTechConstraints | None:

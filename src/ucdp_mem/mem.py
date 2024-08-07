@@ -32,7 +32,7 @@ from functools import cached_property
 import ucdp as u
 from makolator.helper import indent
 from pydantic import PositiveInt
-from ucdp_addr.addrspace import Addrspace
+from ucdp_addr.addrspace import RO, Access, Addrspace
 from ucdp_addr.util import calc_depth_size
 from ucdp_glbl.lane import Lanes, fill_lanes
 from ucdp_glbl.mem import calc_slicewidths
@@ -68,8 +68,7 @@ class AMemMod(u.ATailoredMod):
     powerlanes: Lanes | None = None
     """Access Lanes."""
 
-    writable: u.ClassVar[bool] = False
-    rewritable: u.ClassVar[bool] = False
+    access: u.ClassVar[Access] = RO
 
     def __init__(
         self,
@@ -117,14 +116,14 @@ class AMemMod(u.ATailoredMod):
         if self.accesslanes:
             return LanesMemIoType(
                 datawidth=self.width,
-                writable=self.writable,
+                writable=bool(self.access.write),
                 slicewidths=self.slicewidths,
                 lanes=self.accesslanes,
             )
         return MemIoType(
             datawidth=self.width,
             addrwidth=u.log2(self.depth - 1),
-            writable=self.writable,
+            writable=bool(self.access.write),
             slicewidths=self.slicewidths,
         )
 
@@ -141,7 +140,7 @@ class AMemMod(u.ATailoredMod):
     @cached_property
     def addrspace(self) -> Addrspace:
         """Address Space."""
-        return Addrspace(name=self.hiername, width=self.width, depth=self.depth)
+        return Addrspace(name=self.hiername, width=self.width, depth=self.depth, bus=self.access)
 
     @cached_property
     @abstractmethod

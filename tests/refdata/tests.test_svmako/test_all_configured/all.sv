@@ -41,6 +41,42 @@ module all();
 
 
   // ------------------------------------------------------
+  //  tests.all_otp0: u_otp0
+  // ------------------------------------------------------
+  all_otp0 u_otp0 (
+    // main_i
+    .main_clk_i   (1'b0               ), // TODO
+    .main_rst_an_i(1'b0               ), // TODO - Async Reset (Low-Active)
+    // io_i
+    .io_ena_i     (1'b0               ), // TODO
+    .io_addr_i    ({$clog2(99) {1'b0}}), // TODO
+    .io_wena_i    (1'b0               ), // TODO
+    .io_wdata_i   (8'h00              ), // TODO
+    .io_rdata_o   (                   )  // TODO
+    // pwr_i
+    // tech_i
+  );
+
+
+  // ------------------------------------------------------
+  //  tests.all_otp1: u_otp1
+  // ------------------------------------------------------
+  all_otp1 u_otp1 (
+    // main_i
+    .main_clk_i   (1'b0                 ), // TODO
+    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    // io_i
+    .io_ena_i     (1'b0                 ), // TODO
+    .io_addr_i    ({$clog2(1023) {1'b0}}), // TODO
+    .io_wena_i    (1'b0                 ), // TODO
+    .io_wdata_i   (64'h0000000000000000 ), // TODO
+    .io_rdata_o   (                     )  // TODO
+    // pwr_i
+    // tech_i
+  );
+
+
+  // ------------------------------------------------------
   //  tests.all_rom0: u_rom0
   // ------------------------------------------------------
   all_rom0 u_rom0 (

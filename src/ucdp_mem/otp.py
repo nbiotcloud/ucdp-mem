@@ -26,6 +26,7 @@
 from functools import cached_property
 
 import ucdp as u
+from ucdp_addr.addrspace import RWL, Access
 
 from .mem import AMemMod
 from .memtechconstraints import MemTechConstraints
@@ -34,7 +35,7 @@ from .memtechconstraints import MemTechConstraints
 class OtpMod(AMemMod):
     """One-Time-Programmable Memory."""
 
-    writable: u.ClassVar[bool] = True
+    access: u.ClassVar[Access] = RWL
 
     @cached_property
     def memtechconstraints(self) -> MemTechConstraints | None:

@@ -26,6 +26,7 @@
 from functools import cached_property
 
 import ucdp as u
+from ucdp_addr.addrspace import RW, Access
 
 from .mem import AMemMod
 from .memtechconstraints import MemTechConstraints
@@ -37,8 +38,7 @@ class RamMod(AMemMod):
     retention: bool = False
     """Retention Capability."""
 
-    writable: u.ClassVar[bool] = True
-    rewritable: u.ClassVar[bool] = True
+    access: u.ClassVar[Access] = RW
 
     @cached_property
     def memtechconstraints(self) -> MemTechConstraints | None:

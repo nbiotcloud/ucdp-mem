@@ -42,21 +42,19 @@ class HdlFileList(u.ModFileList):
 class RomMod(um.RomMod):
     """ROM Module."""
 
-    filelists: u.ClassVar[u.ModFileLists] = (
-        HdlFileList(
-            gen="full",
-        ),
-    )
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
 
 class RamMod(um.RamMod):
     """RAM Module."""
 
-    filelists: u.ClassVar[u.ModFileLists] = (
-        HdlFileList(
-            gen="full",
-        ),
-    )
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+
+class OtpMod(um.OtpMod):
+    """OTP Module."""
+
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
 
 class AllMod(u.AMod):
@@ -73,6 +71,9 @@ class AllMod(u.AMod):
             um.Lane(name="one", size="4k"),
             um.Lane(name="two"),
         )
+
+        OtpMod(self, "u_otp0", depth=100, width=8)
+        OtpMod(self, "u_otp1", size=8 * 1024, width=64)
 
         RomMod(self, "u_rom0", depth=100, width=8)
         RomMod(self, "u_rom1", size=8 * 1024, width=64)
