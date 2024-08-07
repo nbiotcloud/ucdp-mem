@@ -21,11 +21,50 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Basic Testing."""
 
-import ucdp_mem
+"""
+Types.
+"""
+
+import ucdp as u
+from ucdp_addr.util import calc_depth_size
+from ucdp_glbl.lane import Lanes
+from ucdp_glbl.mem import MemIoType, SliceWidths
+
+__all__ = ["MemIoType", "LanesMemIoType", "MemPwrType", "MemTechType"]
 
 
-def test_examplefunc():
-    """Simple Testing."""
-    assert ucdp_mem.examplefunc(3, second=2) == 5
+class LanesMemIoType(u.AStructType):
+    """Memory IO Type."""
+
+    datawidth: int | u.Expr
+    writable: bool
+    slicewidths: SliceWidths | None = None
+    lanes: Lanes
+
+    def _build(self) -> None:
+        width = self.datawidth
+        for lane in self.lanes:
+            depth = calc_depth_size(width=width, size=lane.size)[0]
+            type_ = MemIoType(
+                datawidth=width,
+                addrwidth=u.log2(depth - 1),
+                writable=self.writable,
+                slicewidths=self.slicewidths,
+                addressing="data",
+            )
+            self._add(lane.name, type_)
+
+
+class MemPwrType(u.AStructType):
+    """Memory Power Type."""
+
+    def _build(self):
+        pass
+
+
+class MemTechType(u.AStructType):
+    """Memory Technology Type."""
+
+    def _build(self):
+        pass

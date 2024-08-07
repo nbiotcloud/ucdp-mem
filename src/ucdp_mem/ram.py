@@ -21,4 +21,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Tests."""
+"""Random-Access-Memory."""
+
+from functools import cached_property
+
+import ucdp as u
+
+from .mem import AMemMod
+from .memtechconstraints import MemTechConstraints
+
+
+class RamMod(AMemMod):
+    """Random-Access-Memory."""
+
+    retention: bool = False
+    """Retention Capability."""
+
+    writable: u.ClassVar[bool] = True
+    rewritable: u.ClassVar[bool] = True
+
+    @cached_property
+    def memtechconstraints(self) -> MemTechConstraints | None:
+        """Memory Technology Constraints."""
+        try:
+            import ucdpmemtechconfig
+
+            return ucdpmemtechconfig.get_ramtechconstraints(self.hiername)
+        except (ImportError, AttributeError):
+            return None

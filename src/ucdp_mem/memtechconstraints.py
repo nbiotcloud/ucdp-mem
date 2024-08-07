@@ -21,4 +21,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Tests."""
+
+"""
+Technology Memory Segmentation Constraints.
+"""
+
+import ucdp as u
+from pydantic import PositiveInt
+
+
+class MemTechConstraints(u.LightObject):
+    """
+    Technology Memory Segmentation Constraints.
+    """
+
+    max_depth: PositiveInt | None = None
+    max_width: PositiveInt | None = None
+    depth_inc: PositiveInt | None = None
+    width_inc: PositiveInt | None = None

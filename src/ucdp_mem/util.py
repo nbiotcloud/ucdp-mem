@@ -21,4 +21,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-"""Tests."""
+
+"""
+Utilities.
+"""
+
+import math
+
+from uniquer import uniquetuple
+
+
+def gcd(values):
+    """
+    Greatest common divider of `values`.
+
+    >>> gcd([1024, 768, 2048])
+    256
+    """
+    values = uniquetuple(values)
+    result = values[0]
+    for value in values[1:]:
+        result = math.gcd(result, value)
+    return result
