@@ -72,8 +72,12 @@ module all_ram4 ( // tests.test_svmako.RamMod
   input  wire  [$clog2(16383)-1:0] io_two_addr_i,
   input  wire                      io_two_wena_i,
   input  wire  [15:0]              io_two_wdata_i,
-  output logic [15:0]              io_two_rdata_o
+  output logic [15:0]              io_two_rdata_o,
   // pwr_i
+  // pwr_one_i
+  input  wire                      pwr_one_pwr_i,
+  // pwr_two_i
+  input  wire                      pwr_two_pwr_i
   // tech_i
 );
 

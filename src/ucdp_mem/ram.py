@@ -27,9 +27,23 @@ from functools import cached_property
 
 import ucdp as u
 from ucdp_addr.addrspace import RW, Access
+from ucdp_glbl.lane import Lane
 
 from .mem import AMemMod
 from .memtechconstraints import MemTechConstraints
+from .types import MemPwrType
+
+
+class RamPwrType(MemPwrType):
+    """RAM Memory Power Type."""
+
+    retention: bool = False
+    """Retention Capability."""
+
+    def _build(self):
+        self._add("pwr", u.EnaType())
+        if self.retention:
+            self._add("ret", u.EnaType())
 
 
 class RamMod(AMemMod):
@@ -49,3 +63,7 @@ class RamMod(AMemMod):
             return ucdpmemtechconfig.get_ramtechconstraints(self.hiername)
         except (ImportError, AttributeError):
             return None
+
+    def get_pwrlanetype(self, lane: Lane) -> MemPwrType:
+        """Determine Power Lane Control Type."""
+        return RamPwrType(retention=self.retention)

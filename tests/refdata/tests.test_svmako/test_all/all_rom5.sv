@@ -50,12 +50,15 @@
 module all_rom5 ( // tests.test_svmako.RomMod
   // main_i
   input  wire                      main_clk_i,
-  input  wire                      main_rst_an_i, // Async Reset (Low-Active)
+  input  wire                      main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
-  input  wire                      io_ena_i,
-  input  wire  [$clog2(10239)-1:0] io_addr_i,
-  output logic [17:0]              io_rdata_o
+  // io_main_i
+  input  wire                      io_main_ena_i,
+  input  wire  [$clog2(10239)-1:0] io_main_addr_i,
+  output logic [17:0]              io_main_rdata_o,
   // pwr_i
+  // pwr_main_i
+  input  wire                      pwr_main_pwr_i
   // tech_i
 );
 

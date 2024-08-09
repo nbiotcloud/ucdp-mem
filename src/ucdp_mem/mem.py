@@ -34,12 +34,12 @@ from makolator.helper import indent
 from pydantic import PositiveInt
 from ucdp_addr.addrspace import RO, Access, Addrspace
 from ucdp_addr.util import calc_depth_size
-from ucdp_glbl.lane import Lanes, fill_lanes
+from ucdp_glbl.lane import Lane, Lanes, fill_lanes
 from ucdp_glbl.mem import calc_slicewidths
 
 from .memtechconstraints import MemTechConstraints
 from .segmentation import Segmentation
-from .types import LanesMemIoType, MemIoType, MemPwrType, MemTechType, SliceWidths
+from .types import LanesMemIoType, LanesMemPwrType, MemPwrType, MemTechType, SliceWidths
 from .wordmasks import Wordmasks, cast_wordmasks, width_to_wordmasks
 
 try:
@@ -63,9 +63,9 @@ class AMemMod(u.ATailoredMod):
     """Data Slice Widths."""
     wordmasks: Wordmasks
     """Word Masks for 32-bit mapping."""
-    accesslanes: Lanes | None = None
+    accesslanes: Lanes
     """Access Lanes."""
-    powerlanes: Lanes | None = None
+    powerlanes: Lanes
     """Access Lanes."""
 
     access: u.ClassVar[Access] = RO
@@ -86,8 +86,8 @@ class AMemMod(u.ATailoredMod):
         depth, size = calc_depth_size(width, depth, size)
         size = u.Bytesize(size)
         wordmasks = cast_wordmasks(wordmasks, width=width) if wordmasks else width_to_wordmasks(width)
-        accesslanes = fill_lanes(accesslanes, size) if accesslanes else None
-        powerlanes = fill_lanes(powerlanes, size) if powerlanes else None
+        accesslanes = fill_lanes(accesslanes, size, default=True)
+        powerlanes = fill_lanes(powerlanes, size, default=True)
         if slicewidth and slicewidths:
             raise ValueError("'slicewidth' and 'slicewidths' are mutally exclusive.")
         if slicewidth:
@@ -111,25 +111,25 @@ class AMemMod(u.ATailoredMod):
         self.add_port(self.techtype, "tech_i")
 
     @cached_property
-    def iotype(self) -> LanesMemIoType | MemIoType:
+    def iotype(self) -> LanesMemIoType:
         """IO Type."""
-        if self.accesslanes:
-            return LanesMemIoType(
-                datawidth=self.width,
-                writable=bool(self.access.write),
-                slicewidths=self.slicewidths,
-                lanes=self.accesslanes,
-            )
-        return MemIoType(
+        return LanesMemIoType(
             datawidth=self.width,
-            addrwidth=u.log2(self.depth - 1),
             writable=bool(self.access.write),
             slicewidths=self.slicewidths,
+            lanes=self.accesslanes,
         )
 
     @cached_property
-    def pwrtype(self) -> MemPwrType:
+    def pwrtype(self) -> LanesMemPwrType:
         """Power Control Type."""
+        type_ = LanesMemPwrType()
+        for lane in self.powerlanes:
+            type_.add(lane.name or "main", self.get_pwrlanetype(lane))
+        return type_
+
+    def get_pwrlanetype(self, lane: Lane) -> MemPwrType:
+        """Determine Power Lane Control Type."""
         return MemPwrType()
 
     @cached_property
@@ -163,8 +163,8 @@ class AMemMod(u.ATailoredMod):
     def get_overview(self) -> str:
         """Overview."""
         wordmasks = ", ".join(str(mask) for mask in self.wordmasks)
-        accesslanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.accesslanes) if self.accesslanes else "-"
-        powerlanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.powerlanes) if self.powerlanes else "-"
+        accesslanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.accesslanes if lane.name) or "-"
+        powerlanes = ", ".join(f"{lane.name}='{lane.size}'" for lane in self.powerlanes if lane.name) or "-"
         memtechconstraints = self.memtechconstraints or "-"
         lines = [
             f"Org:         {self.addrspace.org}",

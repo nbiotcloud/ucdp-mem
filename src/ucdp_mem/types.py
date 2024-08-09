@@ -35,7 +35,7 @@ __all__ = ["MemIoType", "LanesMemIoType", "MemPwrType", "MemTechType"]
 
 
 class LanesMemIoType(u.AStructType):
-    """Memory IO Type."""
+    """Memory Lanes IO Type."""
 
     datawidth: int | u.Expr
     writable: bool
@@ -45,7 +45,7 @@ class LanesMemIoType(u.AStructType):
     def _build(self) -> None:
         width = self.datawidth
         for lane in self.lanes:
-            depth = calc_depth_size(width=width, size=lane.size)[0]
+            depth = calc_depth_size(width, size=lane.size)[0]
             type_ = MemIoType(
                 datawidth=width,
                 addrwidth=u.log2(depth - 1),
@@ -53,14 +53,18 @@ class LanesMemIoType(u.AStructType):
                 slicewidths=self.slicewidths,
                 addressing="data",
             )
-            self._add(lane.name, type_)
+            self._add(lane.name or "main", type_)
 
 
 class MemPwrType(u.AStructType):
-    """Memory Power Type."""
+    """Memory Lane Power Type."""
 
     def _build(self):
         pass
+
+
+class LanesMemPwrType(u.DynamicStructType):
+    """Memory Lanes Power Type."""
 
 
 class MemTechType(u.AStructType):

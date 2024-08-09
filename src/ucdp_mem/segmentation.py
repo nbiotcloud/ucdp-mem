@@ -58,23 +58,13 @@ from aligntext import align, center
 from defaultlist import defaultlist
 from icdutil import num
 from pydantic import NonNegativeInt, PositiveInt
-from ucdp_addr import Addrspace, zip_addrspaces
+from ucdp_addr import Addrspace, DefaultAddrspace, zip_addrspaces
 from ucdp_addr.util import calc_depth_size
-from ucdp_glbl.lane import Lane, Lanes
+from ucdp_glbl.lane import DefaultLane, Lane, Lanes
 
 from .memtechconstraints import MemTechConstraints
 from .types import SliceWidths
 from .util import gcd
-
-
-class DefaultLane(Lane):
-    """Default Lane."""
-
-    name: str = ""
-
-
-class _DefaultAddrspace(Addrspace):
-    name: str = ""
 
 
 class Segment(u.LightObject):
@@ -345,10 +335,6 @@ class Segmentation(u.Object):
             for accessspace, powerspace in zip_addrspaces(accessspaces, powerspaces):
                 common = accessspace.get_intersect(powerspace)
                 offset = int(common.baseaddr / bytes_per_word)
-                if common.baseaddr % bytes_per_word:
-                    raise ValueError(f"Invalid segment offset {common.baseaddr / bytes_per_word}")
-                if common.size % bytes_per_word:
-                    raise ValueError(f"Invalid segment size {common.size / bytes_per_word}")
                 depth = int(common.size / bytes_per_word)
                 accesslane = self._addrspace2lane(accessspace)
                 powerlane = self._addrspace2lane(powerspace)
@@ -360,13 +346,13 @@ class Segmentation(u.Object):
 
     def _lane2addrspaces(self, lanes: Lanes) -> Iterator[Addrspace]:
         """Convert to Address Spaces."""
-        if lanes:
-            baseaddr = 0
-            for lane in lanes:
+        baseaddr = 0
+        for lane in lanes or (DefaultLane(size=self.size),):
+            if lane.name:
                 yield Addrspace(name=lane.name, baseaddr=baseaddr, width=8, size=lane.size, attrs=lane.attrs)
-                baseaddr += lane.size
-        else:
-            yield _DefaultAddrspace(width=8, size=self.size)
+            else:
+                yield DefaultAddrspace(width=8, size=lane.size, attrs=lane.attrs)
+            baseaddr += lane.size
 
     @staticmethod
     def _addrspace2lane(addrspace: Addrspace) -> Lane | None:

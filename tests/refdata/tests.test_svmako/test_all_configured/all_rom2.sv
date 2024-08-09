@@ -61,8 +61,10 @@ module all_rom2 ( // tests.test_svmako.RomMod
   // io_two_i
   input  wire                     io_two_ena_i,
   input  wire  [$clog2(3071)-1:0] io_two_addr_i,
-  output logic [63:0]             io_two_rdata_o
+  output logic [63:0]             io_two_rdata_o,
   // pwr_i
+  // pwr_main_i
+  input  wire                     pwr_main_pwr_i
   // tech_i
 );
 
