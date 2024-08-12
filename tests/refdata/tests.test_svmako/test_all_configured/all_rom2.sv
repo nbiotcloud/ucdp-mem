@@ -69,6 +69,53 @@ module all_rom2 ( // tests.test_svmako.RomMod
 );
 
 
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_y0_x0_s
+  logic                    mem_y0_x0_ena_s;
+  logic [$clog2(1023)-1:0] mem_y0_x0_addr_s;
+  logic [63:0]             mem_y0_x0_rdata_s;
+  // mem_y1_x0_s
+  logic                    mem_y1_x0_ena_s;
+  logic [$clog2(1023)-1:0] mem_y1_x0_addr_s;
+  logic [63:0]             mem_y1_x0_rdata_s;
+  // mem_y2_x0_s
+  logic                    mem_y2_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y2_x0_addr_s;
+  logic [63:0]             mem_y2_x0_rdata_s;
+
+
+  // ------------------------------------------------------
+  //  tests.all_rom2_mux: u_mux
+  // ------------------------------------------------------
+  all_rom2_mux u_mux (
+    // in_i
+    // in_one_i
+    .in_one_ena_i     (io_one_ena_i     ),
+    .in_one_addr_i    (io_one_addr_i    ),
+    .in_one_rdata_o   (io_one_rdata_o   ),
+    // in_two_i
+    .in_two_ena_i     (io_two_ena_i     ),
+    .in_two_addr_i    (io_two_addr_i    ),
+    .in_two_rdata_o   (io_two_rdata_o   ),
+    // out_o
+    // out_y0_x0_o
+    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ),
+    .out_y0_x0_addr_o (mem_y0_x0_addr_s ),
+    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s),
+    // out_y1_x0_o
+    .out_y1_x0_ena_o  (mem_y1_x0_ena_s  ),
+    .out_y1_x0_addr_o (mem_y1_x0_addr_s ),
+    .out_y1_x0_rdata_i(mem_y1_x0_rdata_s),
+    // out_y2_x0_o
+    .out_y2_x0_ena_o  (mem_y2_x0_ena_s  ),
+    .out_y2_x0_addr_o (mem_y2_x0_addr_s ),
+    .out_y2_x0_rdata_i(mem_y2_x0_rdata_s)
+  );
+
 endmodule // all_rom2
 
 `default_nettype wire

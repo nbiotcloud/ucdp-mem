@@ -82,6 +82,153 @@ module all_ram4 ( // tests.test_svmako.RamMod
 );
 
 
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_y0_x0_s
+  logic                    mem_y0_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y0_x0_addr_s;
+  logic                    mem_y0_x0_wena_s;
+  logic [15:0]             mem_y0_x0_wdata_s;
+  logic [15:0]             mem_y0_x0_rdata_s;
+  // mem_y1_x0_s
+  logic                    mem_y1_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y1_x0_addr_s;
+  logic                    mem_y1_x0_wena_s;
+  logic [15:0]             mem_y1_x0_wdata_s;
+  logic [15:0]             mem_y1_x0_rdata_s;
+  // mem_y2_x0_s
+  logic                    mem_y2_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y2_x0_addr_s;
+  logic                    mem_y2_x0_wena_s;
+  logic [15:0]             mem_y2_x0_wdata_s;
+  logic [15:0]             mem_y2_x0_rdata_s;
+  // mem_y3_x0_s
+  logic                    mem_y3_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y3_x0_addr_s;
+  logic                    mem_y3_x0_wena_s;
+  logic [15:0]             mem_y3_x0_wdata_s;
+  logic [15:0]             mem_y3_x0_rdata_s;
+  // mem_y4_x0_s
+  logic                    mem_y4_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y4_x0_addr_s;
+  logic                    mem_y4_x0_wena_s;
+  logic [15:0]             mem_y4_x0_wdata_s;
+  logic [15:0]             mem_y4_x0_rdata_s;
+  // mem_y5_x0_s
+  logic                    mem_y5_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y5_x0_addr_s;
+  logic                    mem_y5_x0_wena_s;
+  logic [15:0]             mem_y5_x0_wdata_s;
+  logic [15:0]             mem_y5_x0_rdata_s;
+  // mem_y6_x0_s
+  logic                    mem_y6_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y6_x0_addr_s;
+  logic                    mem_y6_x0_wena_s;
+  logic [15:0]             mem_y6_x0_wdata_s;
+  logic [15:0]             mem_y6_x0_rdata_s;
+  // mem_y7_x0_s
+  logic                    mem_y7_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y7_x0_addr_s;
+  logic                    mem_y7_x0_wena_s;
+  logic [15:0]             mem_y7_x0_wdata_s;
+  logic [15:0]             mem_y7_x0_rdata_s;
+  // mem_y8_x0_s
+  logic                    mem_y8_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y8_x0_addr_s;
+  logic                    mem_y8_x0_wena_s;
+  logic [15:0]             mem_y8_x0_wdata_s;
+  logic [15:0]             mem_y8_x0_rdata_s;
+  // mem_y9_x0_s
+  logic                    mem_y9_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y9_x0_addr_s;
+  logic                    mem_y9_x0_wena_s;
+  logic [15:0]             mem_y9_x0_wdata_s;
+  logic [15:0]             mem_y9_x0_rdata_s;
+
+
+  // ------------------------------------------------------
+  //  tests.all_ram4_mux: u_mux
+  // ------------------------------------------------------
+  all_ram4_mux u_mux (
+    // in_i
+    // in_one_i
+    .in_one_ena_i     (io_one_ena_i     ),
+    .in_one_addr_i    (io_one_addr_i    ),
+    .in_one_wena_i    (io_one_wena_i    ),
+    .in_one_wdata_i   (io_one_wdata_i   ),
+    .in_one_rdata_o   (io_one_rdata_o   ),
+    // in_two_i
+    .in_two_ena_i     (io_two_ena_i     ),
+    .in_two_addr_i    (io_two_addr_i    ),
+    .in_two_wena_i    (io_two_wena_i    ),
+    .in_two_wdata_i   (io_two_wdata_i   ),
+    .in_two_rdata_o   (io_two_rdata_o   ),
+    // out_o
+    // out_y0_x0_o
+    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ),
+    .out_y0_x0_addr_o (mem_y0_x0_addr_s ),
+    .out_y0_x0_wena_o (mem_y0_x0_wena_s ),
+    .out_y0_x0_wdata_o(mem_y0_x0_wdata_s),
+    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s),
+    // out_y1_x0_o
+    .out_y1_x0_ena_o  (mem_y1_x0_ena_s  ),
+    .out_y1_x0_addr_o (mem_y1_x0_addr_s ),
+    .out_y1_x0_wena_o (mem_y1_x0_wena_s ),
+    .out_y1_x0_wdata_o(mem_y1_x0_wdata_s),
+    .out_y1_x0_rdata_i(mem_y1_x0_rdata_s),
+    // out_y2_x0_o
+    .out_y2_x0_ena_o  (mem_y2_x0_ena_s  ),
+    .out_y2_x0_addr_o (mem_y2_x0_addr_s ),
+    .out_y2_x0_wena_o (mem_y2_x0_wena_s ),
+    .out_y2_x0_wdata_o(mem_y2_x0_wdata_s),
+    .out_y2_x0_rdata_i(mem_y2_x0_rdata_s),
+    // out_y3_x0_o
+    .out_y3_x0_ena_o  (mem_y3_x0_ena_s  ),
+    .out_y3_x0_addr_o (mem_y3_x0_addr_s ),
+    .out_y3_x0_wena_o (mem_y3_x0_wena_s ),
+    .out_y3_x0_wdata_o(mem_y3_x0_wdata_s),
+    .out_y3_x0_rdata_i(mem_y3_x0_rdata_s),
+    // out_y4_x0_o
+    .out_y4_x0_ena_o  (mem_y4_x0_ena_s  ),
+    .out_y4_x0_addr_o (mem_y4_x0_addr_s ),
+    .out_y4_x0_wena_o (mem_y4_x0_wena_s ),
+    .out_y4_x0_wdata_o(mem_y4_x0_wdata_s),
+    .out_y4_x0_rdata_i(mem_y4_x0_rdata_s),
+    // out_y5_x0_o
+    .out_y5_x0_ena_o  (mem_y5_x0_ena_s  ),
+    .out_y5_x0_addr_o (mem_y5_x0_addr_s ),
+    .out_y5_x0_wena_o (mem_y5_x0_wena_s ),
+    .out_y5_x0_wdata_o(mem_y5_x0_wdata_s),
+    .out_y5_x0_rdata_i(mem_y5_x0_rdata_s),
+    // out_y6_x0_o
+    .out_y6_x0_ena_o  (mem_y6_x0_ena_s  ),
+    .out_y6_x0_addr_o (mem_y6_x0_addr_s ),
+    .out_y6_x0_wena_o (mem_y6_x0_wena_s ),
+    .out_y6_x0_wdata_o(mem_y6_x0_wdata_s),
+    .out_y6_x0_rdata_i(mem_y6_x0_rdata_s),
+    // out_y7_x0_o
+    .out_y7_x0_ena_o  (mem_y7_x0_ena_s  ),
+    .out_y7_x0_addr_o (mem_y7_x0_addr_s ),
+    .out_y7_x0_wena_o (mem_y7_x0_wena_s ),
+    .out_y7_x0_wdata_o(mem_y7_x0_wdata_s),
+    .out_y7_x0_rdata_i(mem_y7_x0_rdata_s),
+    // out_y8_x0_o
+    .out_y8_x0_ena_o  (mem_y8_x0_ena_s  ),
+    .out_y8_x0_addr_o (mem_y8_x0_addr_s ),
+    .out_y8_x0_wena_o (mem_y8_x0_wena_s ),
+    .out_y8_x0_wdata_o(mem_y8_x0_wdata_s),
+    .out_y8_x0_rdata_i(mem_y8_x0_rdata_s),
+    // out_y9_x0_o
+    .out_y9_x0_ena_o  (mem_y9_x0_ena_s  ),
+    .out_y9_x0_addr_o (mem_y9_x0_addr_s ),
+    .out_y9_x0_wena_o (mem_y9_x0_wena_s ),
+    .out_y9_x0_wdata_o(mem_y9_x0_wdata_s),
+    .out_y9_x0_rdata_i(mem_y9_x0_rdata_s)
+  );
+
 endmodule // all_ram4
 
 `default_nettype wire

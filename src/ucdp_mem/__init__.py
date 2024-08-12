@@ -35,6 +35,7 @@ from .otp import OtpMod
 from .ram import RamMod
 from .rom import RomMod
 from .segmentation import Segment, Segmentation
+from .segmux import SegMuxMod
 
 __all__ = [
     "AMemMod",
@@ -43,10 +44,11 @@ __all__ = [
     "cast_attrs",
     "CastableAttrs",
     "Lane",
+    "MemTechConstraints",
     "OtpMod",
     "RamMod",
     "RomMod",
     "Segment",
     "Segmentation",
-    "MemTechConstraints",
+    "SegMuxMod",
 ]

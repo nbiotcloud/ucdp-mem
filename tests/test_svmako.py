@@ -33,10 +33,13 @@ class HdlFileList(u.ModFileList):
 
     name: str = "hdl"
     filepaths: u.ToPaths = ("$PRJROOT/{mod.modname}.sv",)
-    template_filepaths: u.ToPaths = (
-        "amem.sv.mako",
-        "sv.mako",
-    )
+    template_filepaths: u.ToPaths = ("sv.mako",)
+
+
+class SegMuxMod(um.SegMuxMod):
+    """Segmentation Multiplexer."""
+
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full", template_filepaths=("segmux.sv.mako",)),)
 
 
 class RomMod(um.RomMod):
@@ -44,11 +47,19 @@ class RomMod(um.RomMod):
 
     filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
+    def _build(self):
+        super()._build()
+        SegMuxMod.create(self, "u_mux", self.segmentation, self.accesslanes, "io_i", "create(mem_s)", writable=False)
+
 
 class RamMod(um.RamMod):
     """RAM Module."""
 
     filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self):
+        super()._build()
+        SegMuxMod.create(self, "u_mux", self.segmentation, self.accesslanes, "io_i", "create(mem_s)", addrgate=True)
 
 
 class OtpMod(um.OtpMod):

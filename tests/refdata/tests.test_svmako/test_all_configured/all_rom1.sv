@@ -63,6 +63,25 @@ module all_rom1 ( // tests.test_svmako.RomMod
 );
 
 
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  logic                    mem_main_ena_s;
+  logic [$clog2(1023)-1:0] mem_main_addr_s;
+  logic [63:0]             mem_main_rdata_s;
+
+  // ------------------------------------------------------
+  //  Assigns
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  assign mem_main_ena_s  = io_main_ena_i;
+  assign mem_main_addr_s = io_main_addr_i;
+  assign io_main_rdata_o = mem_main_rdata_s;
+
 endmodule // all_rom1
 
 `default_nettype wire

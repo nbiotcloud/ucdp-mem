@@ -68,6 +68,51 @@ module all_ram3 ( // tests.test_svmako.RamMod
 );
 
 
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_y0_x0_s
+  logic                    mem_y0_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y0_x0_addr_s;
+  logic                    mem_y0_x0_wena_s;
+  logic [15:0]             mem_y0_x0_wdata_s;
+  logic [15:0]             mem_y0_x0_rdata_s;
+  // mem_y1_x0_s
+  logic                    mem_y1_x0_ena_s;
+  logic [$clog2(2047)-1:0] mem_y1_x0_addr_s;
+  logic                    mem_y1_x0_wena_s;
+  logic [15:0]             mem_y1_x0_wdata_s;
+  logic [15:0]             mem_y1_x0_rdata_s;
+
+
+  // ------------------------------------------------------
+  //  tests.all_ram3_mux: u_mux
+  // ------------------------------------------------------
+  all_ram3_mux u_mux (
+    // in_i
+    // in_main_i
+    .in_main_ena_i    (io_main_ena_i    ),
+    .in_main_addr_i   (io_main_addr_i   ),
+    .in_main_wena_i   (io_main_wena_i   ),
+    .in_main_wdata_i  (io_main_wdata_i  ),
+    .in_main_rdata_o  (io_main_rdata_o  ),
+    // out_o
+    // out_y0_x0_o
+    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ),
+    .out_y0_x0_addr_o (mem_y0_x0_addr_s ),
+    .out_y0_x0_wena_o (mem_y0_x0_wena_s ),
+    .out_y0_x0_wdata_o(mem_y0_x0_wdata_s),
+    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s),
+    // out_y1_x0_o
+    .out_y1_x0_ena_o  (mem_y1_x0_ena_s  ),
+    .out_y1_x0_addr_o (mem_y1_x0_addr_s ),
+    .out_y1_x0_wena_o (mem_y1_x0_wena_s ),
+    .out_y1_x0_wdata_o(mem_y1_x0_wdata_s),
+    .out_y1_x0_rdata_i(mem_y1_x0_rdata_s)
+  );
+
 endmodule // all_ram3
 
 `default_nettype wire

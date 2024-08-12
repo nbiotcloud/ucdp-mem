@@ -66,6 +66,31 @@ module all_ram8 ( // tests.test_svmako.RamMod
 );
 
 
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  logic                   mem_main_ena_s;
+  logic [$clog2(119)-1:0] mem_main_addr_s;
+  logic                   mem_main_wena_s;
+  logic [67:0]            mem_main_wdata_s;
+  logic [67:0]            mem_main_rdata_s;
+  logic [16:0]            mem_main_sel_s;
+
+  // ------------------------------------------------------
+  //  Assigns
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  assign mem_main_ena_s   = io_main_ena_i;
+  assign mem_main_addr_s  = io_main_addr_i;
+  assign mem_main_wena_s  = io_main_wena_i;
+  assign mem_main_wdata_s = io_main_wdata_i;
+  assign io_main_rdata_o  = mem_main_rdata_s;
+  assign mem_main_sel_s   = io_main_sel_i;
+
 endmodule // all_ram8
 
 `default_nettype wire
