@@ -58,23 +58,13 @@ from aligntext import align, center
 from defaultlist import defaultlist
 from icdutil import num
 from pydantic import NonNegativeInt, PositiveInt
-from ucdp_addr import Addrspace, zip_addrspaces
+from ucdp_addr import Addrspace, DefaultAddrspace, zip_addrspaces
 from ucdp_addr.util import calc_depth_size
-from ucdp_glbl.lane import Lane, Lanes
+from ucdp_glbl.lane import DefaultLane, Lane, Lanes
 
 from .memtechconstraints import MemTechConstraints
 from .types import SliceWidths
 from .util import gcd
-
-
-class DefaultLane(Lane):
-    """Default Lane."""
-
-    name: str = ""
-
-
-class _DefaultAddrspace(Addrspace):
-    name: str = ""
 
 
 class Segment(u.LightObject):
@@ -96,6 +86,7 @@ class Segment(u.LightObject):
     """Number of Words, maybe a little bit more, to meet tech constraints."""
     phywidth: PositiveInt
     """Width of One Word, maybe a little bit more, to meet tech constraints."""
+    slicewidths: SliceWidths | None = None
     wordslices: PositiveInt = 1
     """Number of Access Slices to the Word."""
     pwrlane: Lane | None = None
@@ -107,6 +98,11 @@ class Segment(u.LightObject):
     def wordslicewidth(self):
         """Word Slice Width."""
         return self.width // self.wordslices
+
+    @property
+    def phybits(self) -> int:
+        """Number of Bits."""
+        return self.phywidth * self.phydepth
 
     def get_overview(self) -> str:
         """Overview."""
@@ -127,38 +123,43 @@ class Segmentation(u.Object):
     width: PositiveInt
     slicewidths: SliceWidths | None = None
 
-    _segments: list[list[Segment]] = u.PrivateField(default_factory=lambda: defaultlist(defaultlist))
+    _rows: list[list[Segment]] = u.PrivateField(default_factory=lambda: defaultlist(defaultlist))
     _depths: list[Segment] = u.PrivateField(default_factory=defaultlist)
     _widths: list[Segment] = u.PrivateField(default_factory=defaultlist)
     _lock: bool = u.PrivateField(default=False)
 
     @property
-    def segments(self) -> tuple[tuple[Segment, ...], ...]:
+    def segments(self) -> tuple[Segment, ...]:
         """Segments."""
-        return tuple(tuple(row) for row in self._segments)
+        return tuple(chain(*self._rows))
 
     @property
-    def depths(self):
+    def rows(self) -> tuple[tuple[Segment, ...], ...]:
+        """Rows And Their Segments."""
+        return tuple(tuple(row) for row in self._rows)
+
+    @property
+    def depths(self) -> tuple[int, ...]:
         """Depths."""
         return tuple(self._depths)
 
     @property
-    def widths(self):
+    def widths(self) -> tuple[int, ...]:
         """Widths."""
         return tuple(self._widths)
 
     @property
-    def x_width(self):
+    def x_width(self) -> PositiveInt:
         """Number of X-Segments."""
         return len(self._widths)
 
     @property
-    def y_width(self):
+    def y_width(self) -> PositiveInt:
         """Number of Y-Segments."""
         return len(self._depths)
 
     @property
-    def gcd_depth(self):
+    def gcd_depth(self) -> PositiveInt:
         """Depths."""
         return gcd(self._depths)
 
@@ -170,14 +171,29 @@ class Segmentation(u.Object):
         return len(self.slicewidths)
 
     @cached_property
-    def size(self):
+    def size(self) -> u.Bytesize:
         """Size in Bytes."""
         return calc_depth_size(self.width, depth=self.depth)[1]
 
     @property
-    def addrwidth(self):
+    def phybits(self) -> PositiveInt:
+        """Physical Size In Bits."""
+        return sum(segment.phybits for segment in self.segments)
+
+    @property
+    def addrwidth(self) -> PositiveInt:
         """Address width in bits."""
-        return num.calc_unsigned_width(self.depth - 1)
+        return int(num.calc_unsigned_width(self.depth - 1))
+
+    @property
+    def is_trivial(self) -> bool:
+        """Segmentation Is Just A Pass-Through."""
+        if len(self._widths) != 1 or len(self._depths) != 1:
+            return False
+        segment = self._rows[0][0]
+        if segment.width != segment.phywidth or segment.depth != segment.phydepth:
+            return False
+        return True
 
     def add_segment(
         self,
@@ -213,7 +229,7 @@ class Segmentation(u.Object):
         """
         if self._lock:
             raise u.LockError("Cannot add segment anymore.")
-        segments = self._segments
+        segments = self._rows
         # check Y-coordinate
         if len(segments) < y:
             raise ValueError(f"Cannot forward to y={y}. Segmentation must be filled sequentially from 0")
@@ -266,14 +282,14 @@ class Segmentation(u.Object):
         if depths != self.depth:
             raise ValueError(f"Segment depths {depths} dont sum-up to total depth {self.depth}")
         # segments
-        for y, row in enumerate(self._segments):
+        for y, row in enumerate(self._rows):
             if len(row) != len(self.widths):
                 raise ValueError(f"Row y={y} misses segments")
 
     def get_overview(self) -> str:
         """Human readable summary."""
         rows = [["y/x", *range(self.x_width - 1, -1, -1)]]
-        rows += [[y] + [seg.get_overview() for seg in reversed(segs)] for y, segs in enumerate(self._segments)]
+        rows += [[y] + [seg.get_overview() for seg in reversed(segs)] for y, segs in enumerate(self._rows)]
         details = align(rows, alignments=(center,))
         return f"{details}\nTotal: {self.depth}x{self.width}/{self.wordslices}({self.size})"
 
@@ -345,10 +361,6 @@ class Segmentation(u.Object):
             for accessspace, powerspace in zip_addrspaces(accessspaces, powerspaces):
                 common = accessspace.get_intersect(powerspace)
                 offset = int(common.baseaddr / bytes_per_word)
-                if common.baseaddr % bytes_per_word:
-                    raise ValueError(f"Invalid segment offset {common.baseaddr / bytes_per_word}")
-                if common.size % bytes_per_word:
-                    raise ValueError(f"Invalid segment size {common.size / bytes_per_word}")
                 depth = int(common.size / bytes_per_word)
                 accesslane = self._addrspace2lane(accessspace)
                 powerlane = self._addrspace2lane(powerspace)
@@ -360,13 +372,13 @@ class Segmentation(u.Object):
 
     def _lane2addrspaces(self, lanes: Lanes) -> Iterator[Addrspace]:
         """Convert to Address Spaces."""
-        if lanes:
-            baseaddr = 0
-            for lane in lanes:
+        baseaddr = 0
+        for lane in lanes or (DefaultLane(size=self.size),):
+            if lane.name:
                 yield Addrspace(name=lane.name, baseaddr=baseaddr, width=8, size=lane.size, attrs=lane.attrs)
-                baseaddr += lane.size
-        else:
-            yield _DefaultAddrspace(width=8, size=self.size)
+            else:
+                yield DefaultAddrspace(width=8, size=lane.size, attrs=lane.attrs)
+            baseaddr += lane.size
 
     @staticmethod
     def _addrspace2lane(addrspace: Addrspace) -> Lane | None:

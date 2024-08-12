@@ -50,17 +50,65 @@
 module all_ram1 ( // tests.test_svmako.RamMod
   // main_i
   input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i, // Async Reset (Low-Active)
+  input  wire                     main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
-  input  wire                     io_ena_i,
-  input  wire  [$clog2(1023)-1:0] io_addr_i,
-  input  wire                     io_wena_i,
-  input  wire  [63:0]             io_wdata_i,
-  output logic [63:0]             io_rdata_o
+  // io_main_i
+  input  wire                     io_main_ena_i,
+  input  wire  [$clog2(1023)-1:0] io_main_addr_i,
+  input  wire                     io_main_wena_i,
+  input  wire  [63:0]             io_main_wdata_i,
+  output logic [63:0]             io_main_rdata_o,
   // pwr_i
+  // pwr_main_i
+  input  wire                     pwr_main_pwr_i
   // tech_i
 );
 
+
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_y0_x0_s
+  logic                    mem_y0_x0_ena_s;
+  logic [$clog2(1023)-1:0] mem_y0_x0_addr_s;
+  logic                    mem_y0_x0_wena_s;
+  logic [31:0]             mem_y0_x0_wdata_s;
+  logic [31:0]             mem_y0_x0_rdata_s;
+  // mem_y0_x1_s
+  logic                    mem_y0_x1_ena_s;
+  logic [$clog2(1023)-1:0] mem_y0_x1_addr_s;
+  logic                    mem_y0_x1_wena_s;
+  logic [31:0]             mem_y0_x1_wdata_s;
+  logic [31:0]             mem_y0_x1_rdata_s;
+
+
+  // ------------------------------------------------------
+  //  tests.all_ram1_mux: u_mux
+  // ------------------------------------------------------
+  all_ram1_mux u_mux (
+    // in_i
+    // in_main_i
+    .in_main_ena_i    (io_main_ena_i    ),
+    .in_main_addr_i   (io_main_addr_i   ),
+    .in_main_wena_i   (io_main_wena_i   ),
+    .in_main_wdata_i  (io_main_wdata_i  ),
+    .in_main_rdata_o  (io_main_rdata_o  ),
+    // out_o
+    // out_y0_x0_o
+    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ),
+    .out_y0_x0_addr_o (mem_y0_x0_addr_s ),
+    .out_y0_x0_wena_o (mem_y0_x0_wena_s ),
+    .out_y0_x0_wdata_o(mem_y0_x0_wdata_s),
+    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s),
+    // out_y0_x1_o
+    .out_y0_x1_ena_o  (mem_y0_x1_ena_s  ),
+    .out_y0_x1_addr_o (mem_y0_x1_addr_s ),
+    .out_y0_x1_wena_o (mem_y0_x1_wena_s ),
+    .out_y0_x1_wdata_o(mem_y0_x1_wdata_s),
+    .out_y0_x1_rdata_i(mem_y0_x1_rdata_s)
+  );
 
 endmodule // all_ram1
 

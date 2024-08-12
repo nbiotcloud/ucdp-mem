@@ -33,30 +33,39 @@ class HdlFileList(u.ModFileList):
 
     name: str = "hdl"
     filepaths: u.ToPaths = ("$PRJROOT/{mod.modname}.sv",)
-    template_filepaths: u.ToPaths = (
-        "amem.sv.mako",
-        "sv.mako",
-    )
+    template_filepaths: u.ToPaths = ("sv.mako",)
+
+
+class SegMuxMod(um.SegMuxMod):
+    """Segmentation Multiplexer."""
+
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full", template_filepaths=("segmux.sv.mako",)),)
 
 
 class RomMod(um.RomMod):
     """ROM Module."""
 
-    filelists: u.ClassVar[u.ModFileLists] = (
-        HdlFileList(
-            gen="full",
-        ),
-    )
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self):
+        super()._build()
+        SegMuxMod.create(self, "u_mux", self.segmentation, self.accesslanes, "io_i", "create(mem_s)", writable=False)
 
 
 class RamMod(um.RamMod):
     """RAM Module."""
 
-    filelists: u.ClassVar[u.ModFileLists] = (
-        HdlFileList(
-            gen="full",
-        ),
-    )
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self):
+        super()._build()
+        SegMuxMod.create(self, "u_mux", self.segmentation, self.accesslanes, "io_i", "create(mem_s)", addrgate=True)
+
+
+class OtpMod(um.OtpMod):
+    """OTP Module."""
+
+    filelists: u.ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
 
 class AllMod(u.AMod):
@@ -74,13 +83,16 @@ class AllMod(u.AMod):
             um.Lane(name="two"),
         )
 
+        OtpMod(self, "u_otp0", depth=100, width=8)
+        OtpMod(self, "u_otp1", size=8 * 1024, width=64)
+
         RomMod(self, "u_rom0", depth=100, width=8)
         RomMod(self, "u_rom1", size=8 * 1024, width=64)
         RomMod(self, "u_rom2", size=4 * 8 * 1024, width=64, accesslanes=accesslanes)
         RomMod(self, "u_rom3", size=8 * 1024, width=16, powerlanes=powerlanes)
         RomMod(self, "u_rom4", size="40KB", width=16, powerlanes=powerlanes, accesslanes=accesslanes)
         RomMod(self, "u_rom5", depth=10240, width=18)
-        RomMod(self, "u_rom6", depth=1982, width=77)
+        # RomMod(self, "u_rom6", depth=1981, width=77)
 
         RamMod(self, "u_ram0", depth=100, width=8)
         RamMod(self, "u_ram1", size=8 * 1024, width=64)
@@ -88,7 +100,7 @@ class AllMod(u.AMod):
         RamMod(self, "u_ram3", size=8 * 1024, width=16, powerlanes=powerlanes)
         RamMod(self, "u_ram4", size="40KB", width=16, powerlanes=powerlanes, accesslanes=accesslanes)
         RamMod(self, "u_ram5", depth=10240, width=18)
-        RamMod(self, "u_ram6", depth=1982, width=77)
+        # RamMod(self, "u_ram6", depth=1981, width=77)
         RamMod(self, "u_ram7", size=1024, width=64, slicewidth=8)
         RamMod(self, "u_ram8", size=1024, width=68, slicewidth=4)
 

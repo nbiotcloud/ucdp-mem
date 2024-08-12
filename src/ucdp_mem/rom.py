@@ -28,15 +28,25 @@
 from functools import cached_property
 
 import ucdp as u
+from ucdp_addr.addrspace import RO, Access
+from ucdp_glbl.lane import Lane
 
 from .mem import AMemMod
 from .memtechconstraints import MemTechConstraints
+from .types import MemPwrType
+
+
+class RomPwrType(MemPwrType):
+    """ROM Memory Power Type."""
+
+    def _build(self):
+        self._add("pwr", u.EnaType())
 
 
 class RomMod(AMemMod):
     """Read-Only-Memory."""
 
-    writable: u.ClassVar[bool] = False
+    access: u.ClassVar[Access] = RO
 
     @cached_property
     def memtechconstraints(self) -> MemTechConstraints | None:
@@ -47,3 +57,7 @@ class RomMod(AMemMod):
             return ucdpmemtechconfig.get_romtechconstraints(self.hiername)
         except (ImportError, AttributeError):
             return None
+
+    def get_pwrlanetype(self, lane: Lane) -> MemPwrType:
+        """Determine Power Lane Control Type."""
+        return RomPwrType()

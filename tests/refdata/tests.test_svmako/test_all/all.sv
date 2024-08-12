@@ -41,17 +41,60 @@ module all();
 
 
   // ------------------------------------------------------
+  //  tests.all_otp0: u_otp0
+  // ------------------------------------------------------
+  all_otp0 u_otp0 (
+    // main_i
+    .main_clk_i     (1'b0               ), // TODO
+    .main_rst_an_i  (1'b0               ), // TODO - Async Reset (Low-Active)
+    // io_i
+    // io_main_i
+    .io_main_ena_i  (1'b0               ), // TODO
+    .io_main_addr_i ({$clog2(99) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0               ), // TODO
+    .io_main_wdata_i(8'h00              ), // TODO
+    .io_main_rdata_o(                   )  // TODO
+    // pwr_i
+    // pwr_main_i
+    // tech_i
+  );
+
+
+  // ------------------------------------------------------
+  //  tests.all_otp1: u_otp1
+  // ------------------------------------------------------
+  all_otp1 u_otp1 (
+    // main_i
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
+    // io_i
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(1023) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0                 ), // TODO
+    .io_main_wdata_i(64'h0000000000000000 ), // TODO
+    .io_main_rdata_o(                     )  // TODO
+    // pwr_i
+    // pwr_main_i
+    // tech_i
+  );
+
+
+  // ------------------------------------------------------
   //  tests.all_rom0: u_rom0
   // ------------------------------------------------------
   all_rom0 u_rom0 (
     // main_i
-    .main_clk_i   (1'b0               ), // TODO
-    .main_rst_an_i(1'b0               ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0               ), // TODO
+    .main_rst_an_i  (1'b0               ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0               ), // TODO
-    .io_addr_i    ({$clog2(99) {1'b0}}), // TODO
-    .io_rdata_o   (                   )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0               ), // TODO
+    .io_main_addr_i ({$clog2(99) {1'b0}}), // TODO
+    .io_main_rdata_o(                   ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0               )  // TODO
     // tech_i
   );
 
@@ -61,13 +104,16 @@ module all();
   // ------------------------------------------------------
   all_rom1 u_rom1 (
     // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(1023) {1'b0}}), // TODO
-    .io_rdata_o   (                     )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(1023) {1'b0}}), // TODO
+    .io_main_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                 )  // TODO
     // tech_i
   );
 
@@ -87,8 +133,10 @@ module all();
     // io_two_i
     .io_two_ena_i  (1'b0                 ), // TODO
     .io_two_addr_i ({$clog2(3071) {1'b0}}), // TODO
-    .io_two_rdata_o(                     )  // TODO
+    .io_two_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i(1'b0                 )  // TODO
     // tech_i
   );
 
@@ -98,13 +146,18 @@ module all();
   // ------------------------------------------------------
   all_rom3 u_rom3 (
     // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(4095) {1'b0}}), // TODO
-    .io_rdata_o   (                     )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(4095) {1'b0}}), // TODO
+    .io_main_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_one_i
+    .pwr_one_pwr_i  (1'b0                 ), // TODO
+    // pwr_two_i
+    .pwr_two_pwr_i  (1'b0                 )  // TODO
     // tech_i
   );
 
@@ -124,8 +177,12 @@ module all();
     // io_two_i
     .io_two_ena_i  (1'b0                  ), // TODO
     .io_two_addr_i ({$clog2(16383) {1'b0}}), // TODO
-    .io_two_rdata_o(                      )  // TODO
+    .io_two_rdata_o(                      ), // TODO
     // pwr_i
+    // pwr_one_i
+    .pwr_one_pwr_i (1'b0                  ), // TODO
+    // pwr_two_i
+    .pwr_two_pwr_i (1'b0                  )  // TODO
     // tech_i
   );
 
@@ -135,29 +192,16 @@ module all();
   // ------------------------------------------------------
   all_rom5 u_rom5 (
     // main_i
-    .main_clk_i   (1'b0                  ), // TODO
-    .main_rst_an_i(1'b0                  ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                  ), // TODO
+    .main_rst_an_i  (1'b0                  ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                  ), // TODO
-    .io_addr_i    ({$clog2(10239) {1'b0}}), // TODO
-    .io_rdata_o   (                      )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                  ), // TODO
+    .io_main_addr_i ({$clog2(10239) {1'b0}}), // TODO
+    .io_main_rdata_o(                      ), // TODO
     // pwr_i
-    // tech_i
-  );
-
-
-  // ------------------------------------------------------
-  //  tests.all_rom6: u_rom6
-  // ------------------------------------------------------
-  all_rom6 u_rom6 (
-    // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
-    // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(1981) {1'b0}}), // TODO
-    .io_rdata_o   (                     )  // TODO
-    // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                  )  // TODO
     // tech_i
   );
 
@@ -167,15 +211,18 @@ module all();
   // ------------------------------------------------------
   all_ram0 u_ram0 (
     // main_i
-    .main_clk_i   (1'b0               ), // TODO
-    .main_rst_an_i(1'b0               ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0               ), // TODO
+    .main_rst_an_i  (1'b0               ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0               ), // TODO
-    .io_addr_i    ({$clog2(99) {1'b0}}), // TODO
-    .io_wena_i    (1'b0               ), // TODO
-    .io_wdata_i   (8'h00              ), // TODO
-    .io_rdata_o   (                   )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0               ), // TODO
+    .io_main_addr_i ({$clog2(99) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0               ), // TODO
+    .io_main_wdata_i(8'h00              ), // TODO
+    .io_main_rdata_o(                   ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0               )  // TODO
     // tech_i
   );
 
@@ -185,15 +232,18 @@ module all();
   // ------------------------------------------------------
   all_ram1 u_ram1 (
     // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(1023) {1'b0}}), // TODO
-    .io_wena_i    (1'b0                 ), // TODO
-    .io_wdata_i   (64'h0000000000000000 ), // TODO
-    .io_rdata_o   (                     )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(1023) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0                 ), // TODO
+    .io_main_wdata_i(64'h0000000000000000 ), // TODO
+    .io_main_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                 )  // TODO
     // tech_i
   );
 
@@ -217,8 +267,10 @@ module all();
     .io_two_addr_i ({$clog2(3071) {1'b0}}), // TODO
     .io_two_wena_i (1'b0                 ), // TODO
     .io_two_wdata_i(64'h0000000000000000 ), // TODO
-    .io_two_rdata_o(                     )  // TODO
+    .io_two_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i(1'b0                 )  // TODO
     // tech_i
   );
 
@@ -228,15 +280,20 @@ module all();
   // ------------------------------------------------------
   all_ram3 u_ram3 (
     // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(4095) {1'b0}}), // TODO
-    .io_wena_i    (1'b0                 ), // TODO
-    .io_wdata_i   (16'h0000             ), // TODO
-    .io_rdata_o   (                     )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(4095) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0                 ), // TODO
+    .io_main_wdata_i(16'h0000             ), // TODO
+    .io_main_rdata_o(                     ), // TODO
     // pwr_i
+    // pwr_one_i
+    .pwr_one_pwr_i  (1'b0                 ), // TODO
+    // pwr_two_i
+    .pwr_two_pwr_i  (1'b0                 )  // TODO
     // tech_i
   );
 
@@ -260,8 +317,12 @@ module all();
     .io_two_addr_i ({$clog2(16383) {1'b0}}), // TODO
     .io_two_wena_i (1'b0                  ), // TODO
     .io_two_wdata_i(16'h0000              ), // TODO
-    .io_two_rdata_o(                      )  // TODO
+    .io_two_rdata_o(                      ), // TODO
     // pwr_i
+    // pwr_one_i
+    .pwr_one_pwr_i (1'b0                  ), // TODO
+    // pwr_two_i
+    .pwr_two_pwr_i (1'b0                  )  // TODO
     // tech_i
   );
 
@@ -271,33 +332,18 @@ module all();
   // ------------------------------------------------------
   all_ram5 u_ram5 (
     // main_i
-    .main_clk_i   (1'b0                  ), // TODO
-    .main_rst_an_i(1'b0                  ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                  ), // TODO
+    .main_rst_an_i  (1'b0                  ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                  ), // TODO
-    .io_addr_i    ({$clog2(10239) {1'b0}}), // TODO
-    .io_wena_i    (1'b0                  ), // TODO
-    .io_wdata_i   (18'h00000             ), // TODO
-    .io_rdata_o   (                      )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                  ), // TODO
+    .io_main_addr_i ({$clog2(10239) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0                  ), // TODO
+    .io_main_wdata_i(18'h00000             ), // TODO
+    .io_main_rdata_o(                      ), // TODO
     // pwr_i
-    // tech_i
-  );
-
-
-  // ------------------------------------------------------
-  //  tests.all_ram6: u_ram6
-  // ------------------------------------------------------
-  all_ram6 u_ram6 (
-    // main_i
-    .main_clk_i   (1'b0                    ), // TODO
-    .main_rst_an_i(1'b0                    ), // TODO - Async Reset (Low-Active)
-    // io_i
-    .io_ena_i     (1'b0                    ), // TODO
-    .io_addr_i    ({$clog2(1981) {1'b0}}   ), // TODO
-    .io_wena_i    (1'b0                    ), // TODO
-    .io_wdata_i   (77'h00000000000000000000), // TODO
-    .io_rdata_o   (                        )  // TODO
-    // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                  )  // TODO
     // tech_i
   );
 
@@ -307,16 +353,19 @@ module all();
   // ------------------------------------------------------
   all_ram7 u_ram7 (
     // main_i
-    .main_clk_i   (1'b0                ), // TODO
-    .main_rst_an_i(1'b0                ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                ), // TODO
+    .main_rst_an_i  (1'b0                ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                ), // TODO
-    .io_addr_i    ({$clog2(127) {1'b0}}), // TODO
-    .io_wena_i    (1'b0                ), // TODO
-    .io_wdata_i   (64'h0000000000000000), // TODO
-    .io_rdata_o   (                    ), // TODO
-    .io_sel_i     (8'h00               )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                ), // TODO
+    .io_main_addr_i ({$clog2(127) {1'b0}}), // TODO
+    .io_main_wena_i (1'b0                ), // TODO
+    .io_main_wdata_i(64'h0000000000000000), // TODO
+    .io_main_rdata_o(                    ), // TODO
+    .io_main_sel_i  (8'h00               ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                )  // TODO
     // tech_i
   );
 
@@ -326,16 +375,19 @@ module all();
   // ------------------------------------------------------
   all_ram8 u_ram8 (
     // main_i
-    .main_clk_i   (1'b0                 ), // TODO
-    .main_rst_an_i(1'b0                 ), // TODO - Async Reset (Low-Active)
+    .main_clk_i     (1'b0                 ), // TODO
+    .main_rst_an_i  (1'b0                 ), // TODO - Async Reset (Low-Active)
     // io_i
-    .io_ena_i     (1'b0                 ), // TODO
-    .io_addr_i    ({$clog2(119) {1'b0}} ), // TODO
-    .io_wena_i    (1'b0                 ), // TODO
-    .io_wdata_i   (68'h00000000000000000), // TODO
-    .io_rdata_o   (                     ), // TODO
-    .io_sel_i     (17'h00000            )  // TODO
+    // io_main_i
+    .io_main_ena_i  (1'b0                 ), // TODO
+    .io_main_addr_i ({$clog2(119) {1'b0}} ), // TODO
+    .io_main_wena_i (1'b0                 ), // TODO
+    .io_main_wdata_i(68'h00000000000000000), // TODO
+    .io_main_rdata_o(                     ), // TODO
+    .io_main_sel_i  (17'h00000            ), // TODO
     // pwr_i
+    // pwr_main_i
+    .pwr_main_pwr_i (1'b0                 )  // TODO
     // tech_i
   );
 

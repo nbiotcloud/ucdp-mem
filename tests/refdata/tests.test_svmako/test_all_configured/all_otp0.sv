@@ -28,67 +28,43 @@
 //
 // =============================================================================
 //
-// Module:     tests.all_ram1
-// Data Model: tests.test_svmako.RamMod
+// Module:     tests.all_otp0
+// Data Model: tests.test_svmako.OtpMod
 //
 //
-// Org:         1024x64 (8 KB)
-// Wordmasks:   0xFFFFFFFF, 0xFFFFFFFF
+// Org:         100x8 (100 bytes)
+// Wordmasks:   0xFF
 // Accesslanes: -
 // Powerlanes:  -
 // Constraints: -
 // Segmentation:
-//     y/x     0
-//      0  1024x64/1
-//     Total: 1024x64/1(8 KB)
+//     y/x    0
+//      0  100x8/1
+//     Total: 100x8/1(100 bytes)
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module all_ram1 ( // tests.test_svmako.RamMod
+module all_otp0 ( // tests.test_svmako.OtpMod
   // main_i
-  input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i,   // Async Reset (Low-Active)
+  input  wire                   main_clk_i,
+  input  wire                   main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
   // io_main_i
-  input  wire                     io_main_ena_i,
-  input  wire  [$clog2(1023)-1:0] io_main_addr_i,
-  input  wire                     io_main_wena_i,
-  input  wire  [63:0]             io_main_wdata_i,
-  output logic [63:0]             io_main_rdata_o,
+  input  wire                   io_main_ena_i,
+  input  wire  [$clog2(99)-1:0] io_main_addr_i,
+  input  wire                   io_main_wena_i,
+  input  wire  [7:0]            io_main_wdata_i,
+  output logic [7:0]            io_main_rdata_o
   // pwr_i
   // pwr_main_i
-  input  wire                     pwr_main_pwr_i
   // tech_i
 );
 
 
-
-  // ------------------------------------------------------
-  //  Signals
-  // ------------------------------------------------------
-  // mem_s
-  // mem_main_s
-  logic                    mem_main_ena_s;
-  logic [$clog2(1023)-1:0] mem_main_addr_s;
-  logic                    mem_main_wena_s;
-  logic [63:0]             mem_main_wdata_s;
-  logic [63:0]             mem_main_rdata_s;
-
-  // ------------------------------------------------------
-  //  Assigns
-  // ------------------------------------------------------
-  // mem_s
-  // mem_main_s
-  assign mem_main_ena_s   = io_main_ena_i;
-  assign mem_main_addr_s  = io_main_addr_i;
-  assign mem_main_wena_s  = io_main_wena_i;
-  assign mem_main_wdata_s = io_main_wdata_i;
-  assign io_main_rdata_o  = mem_main_rdata_s;
-
-endmodule // all_ram1
+endmodule // all_otp0
 
 `default_nettype wire
 `end_keywords

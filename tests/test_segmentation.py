@@ -50,8 +50,9 @@ def test_segmentation():
     assert s.y_width == 3
     assert s.addrwidth == 9
     assert s.gcd_depth == 128
+    assert s.phybits == 512 * 32
 
-    assert s.segments == (
+    assert s.rows == (
         (
             Segment(
                 x=0,
@@ -120,7 +121,7 @@ def test_segmentation():
         ),
     )
 
-    seg0_0 = s.segments[0][0]
+    seg0_0 = s.rows[0][0]
     assert seg0_0.wordslicewidth == 16
 
 

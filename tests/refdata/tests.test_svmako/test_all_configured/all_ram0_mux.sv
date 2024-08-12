@@ -28,41 +28,39 @@
 //
 // =============================================================================
 //
-// Module:     tests.all_ram6
-// Data Model: tests.test_svmako.RamMod
+// Module:     tests.all_ram0_mux
+// Data Model: tests.test_svmako.SegMuxMod
 //
 //
-// Org:         1982x77 (19076 bytes)
-// Wordmasks:   0xFFFFF, 0x7FFFF, 0x7FFFF, 0x7FFFF
-// Accesslanes: -
-// Powerlanes:  -
-// Constraints: -
-// Segmentation:
-//     y/x     0
-//      0  1982x77/1
-//     Total: 1982x77/1(19076 bytes)
+// y/x      0
+//  0  100(128)x8/1
+// Total: 100x8/1(100 bytes)
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module all_ram6 ( // tests.test_svmako.RamMod
-  // main_i
-  input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i, // Async Reset (Low-Active)
-  // io_i
-  input  wire                     io_ena_i,
-  input  wire  [$clog2(1981)-1:0] io_addr_i,
-  input  wire                     io_wena_i,
-  input  wire  [76:0]             io_wdata_i,
-  output logic [76:0]             io_rdata_o
-  // pwr_i
-  // tech_i
+module all_ram0_mux ( // tests.test_svmako.SegMuxMod
+  // in_i
+  // in_main_i
+  input  wire                    in_main_ena_i,
+  input  wire  [$clog2(99)-1:0]  in_main_addr_i,
+  input  wire                    in_main_wena_i,
+  input  wire  [7:0]             in_main_wdata_i,
+  output logic [7:0]             in_main_rdata_o,
+  // out_o
+  // out_y0_x0_o
+  output logic                   out_y0_x0_ena_o,
+  output logic [$clog2(127)-1:0] out_y0_x0_addr_o,
+  output logic                   out_y0_x0_wena_o,
+  output logic [7:0]             out_y0_x0_wdata_o,
+  input  wire  [7:0]             out_y0_x0_rdata_i
 );
 
+// TODO
 
-endmodule // all_ram6
+endmodule // all_ram0_mux
 
 `default_nettype wire
 `end_keywords

@@ -28,39 +28,59 @@
 //
 // =============================================================================
 //
-// Module:     tests.all_rom6
-// Data Model: tests.test_svmako.RomMod
+// Module:     tests.all_rom4_mux
+// Data Model: tests.test_svmako.SegMuxMod
 //
 //
-// Org:         1982x77 (19076 bytes)
-// Wordmasks:   0xFFFFF, 0x7FFFF, 0x7FFFF, 0x7FFFF
-// Accesslanes: -
-// Powerlanes:  -
-// Constraints: -
-// Segmentation:
-//     y/x     0
-//      0  1982x77/1
-//     Total: 1982x77/1(19076 bytes)
+// y/x             0
+//  0  2048x16/1,pwr=one,acc=one
+//  1  2048x16/1,pwr=two,acc=one
+//  2  4096x16/1,pwr=two,acc=two
+//  3  8192x16/1,pwr=two,acc=two
+//  4  4096x16/1,pwr=two,acc=two
+// Total: 20480x16/1(40 KB)
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module all_rom6 ( // tests.test_svmako.RomMod
-  // main_i
-  input  wire                     main_clk_i,
-  input  wire                     main_rst_an_i, // Async Reset (Low-Active)
-  // io_i
-  input  wire                     io_ena_i,
-  input  wire  [$clog2(1981)-1:0] io_addr_i,
-  output logic [76:0]             io_rdata_o
-  // pwr_i
-  // tech_i
+module all_rom4_mux ( // tests.test_svmako.SegMuxMod
+  // in_i
+  // in_one_i
+  input  wire                      in_one_ena_i,
+  input  wire  [$clog2(4095)-1:0]  in_one_addr_i,
+  output logic [15:0]              in_one_rdata_o,
+  // in_two_i
+  input  wire                      in_two_ena_i,
+  input  wire  [$clog2(16383)-1:0] in_two_addr_i,
+  output logic [15:0]              in_two_rdata_o,
+  // out_o
+  // out_y0_x0_o
+  output logic                     out_y0_x0_ena_o,
+  output logic [$clog2(2047)-1:0]  out_y0_x0_addr_o,
+  input  wire  [15:0]              out_y0_x0_rdata_i,
+  // out_y1_x0_o
+  output logic                     out_y1_x0_ena_o,
+  output logic [$clog2(2047)-1:0]  out_y1_x0_addr_o,
+  input  wire  [15:0]              out_y1_x0_rdata_i,
+  // out_y2_x0_o
+  output logic                     out_y2_x0_ena_o,
+  output logic [$clog2(4095)-1:0]  out_y2_x0_addr_o,
+  input  wire  [15:0]              out_y2_x0_rdata_i,
+  // out_y3_x0_o
+  output logic                     out_y3_x0_ena_o,
+  output logic [$clog2(8191)-1:0]  out_y3_x0_addr_o,
+  input  wire  [15:0]              out_y3_x0_rdata_i,
+  // out_y4_x0_o
+  output logic                     out_y4_x0_ena_o,
+  output logic [$clog2(4095)-1:0]  out_y4_x0_addr_o,
+  input  wire  [15:0]              out_y4_x0_rdata_i
 );
 
+// TODO
 
-endmodule // all_rom6
+endmodule // all_rom4_mux
 
 `default_nettype wire
 `end_keywords

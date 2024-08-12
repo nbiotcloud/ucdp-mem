@@ -50,18 +50,46 @@
 module all_ram8 ( // tests.test_svmako.RamMod
   // main_i
   input  wire                    main_clk_i,
-  input  wire                    main_rst_an_i, // Async Reset (Low-Active)
+  input  wire                    main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
-  input  wire                    io_ena_i,
-  input  wire  [$clog2(119)-1:0] io_addr_i,
-  input  wire                    io_wena_i,
-  input  wire  [67:0]            io_wdata_i,
-  output logic [67:0]            io_rdata_o,
-  input  wire  [16:0]            io_sel_i
+  // io_main_i
+  input  wire                    io_main_ena_i,
+  input  wire  [$clog2(119)-1:0] io_main_addr_i,
+  input  wire                    io_main_wena_i,
+  input  wire  [67:0]            io_main_wdata_i,
+  output logic [67:0]            io_main_rdata_o,
+  input  wire  [16:0]            io_main_sel_i,
   // pwr_i
+  // pwr_main_i
+  input  wire                    pwr_main_pwr_i
   // tech_i
 );
 
+
+
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  logic                   mem_main_ena_s;
+  logic [$clog2(119)-1:0] mem_main_addr_s;
+  logic                   mem_main_wena_s;
+  logic [67:0]            mem_main_wdata_s;
+  logic [67:0]            mem_main_rdata_s;
+  logic [16:0]            mem_main_sel_s;
+
+  // ------------------------------------------------------
+  //  Assigns
+  // ------------------------------------------------------
+  // mem_s
+  // mem_main_s
+  assign mem_main_ena_s   = io_main_ena_i;
+  assign mem_main_addr_s  = io_main_addr_i;
+  assign mem_main_wena_s  = io_main_wena_i;
+  assign mem_main_wdata_s = io_main_wdata_i;
+  assign io_main_rdata_o  = mem_main_rdata_s;
+  assign mem_main_sel_s   = io_main_sel_i;
 
 endmodule // all_ram8
 
