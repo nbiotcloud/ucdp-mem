@@ -24,7 +24,7 @@
 
 [project]
 name = "ucdp-mem"
-version = ["dynamic"]
+dynamic = ["version"]
 description = "Unified Chip Design Platform - Memories"
 readme = "README.md"
 authors = [
