@@ -1,12 +1,14 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -47,35 +49,35 @@
 
 module all_rom4_mux ( // tests.test_svmako.SegMuxMod
   // in_i
-  // in_one_i
-  input  wire                      in_one_ena_i,
-  input  wire  [$clog2(4095)-1:0]  in_one_addr_i,
-  output logic [15:0]              in_one_rdata_o,
-  // in_two_i
-  input  wire                      in_two_ena_i,
-  input  wire  [$clog2(16383)-1:0] in_two_addr_i,
-  output logic [15:0]              in_two_rdata_o,
+  //   in_one_i
+  input  wire                      in_one_ena_i,      // Memory Access Enable
+  input  wire  [$clog2(4095)-1:0]  in_one_addr_i,     // Memory Address
+  output logic [15:0]              in_one_rdata_o,    // Memory Read Data
+  //   in_two_i
+  input  wire                      in_two_ena_i,      // Memory Access Enable
+  input  wire  [$clog2(16383)-1:0] in_two_addr_i,     // Memory Address
+  output logic [15:0]              in_two_rdata_o,    // Memory Read Data
   // out_o
-  // out_y0_x0_o
-  output logic                     out_y0_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y0_x0_addr_o,
-  input  wire  [15:0]              out_y0_x0_rdata_i,
-  // out_y1_x0_o
-  output logic                     out_y1_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y1_x0_addr_o,
-  input  wire  [15:0]              out_y1_x0_rdata_i,
-  // out_y2_x0_o
-  output logic                     out_y2_x0_ena_o,
-  output logic [$clog2(4095)-1:0]  out_y2_x0_addr_o,
-  input  wire  [15:0]              out_y2_x0_rdata_i,
-  // out_y3_x0_o
-  output logic                     out_y3_x0_ena_o,
-  output logic [$clog2(8191)-1:0]  out_y3_x0_addr_o,
-  input  wire  [15:0]              out_y3_x0_rdata_i,
-  // out_y4_x0_o
-  output logic                     out_y4_x0_ena_o,
-  output logic [$clog2(4095)-1:0]  out_y4_x0_addr_o,
-  input  wire  [15:0]              out_y4_x0_rdata_i
+  //   out_y0_x0_o
+  output logic                     out_y0_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y0_x0_addr_o,  // Memory Address
+  input  wire  [15:0]              out_y0_x0_rdata_i, // Memory Read Data
+  //   out_y1_x0_o
+  output logic                     out_y1_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y1_x0_addr_o,  // Memory Address
+  input  wire  [15:0]              out_y1_x0_rdata_i, // Memory Read Data
+  //   out_y2_x0_o
+  output logic                     out_y2_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(4095)-1:0]  out_y2_x0_addr_o,  // Memory Address
+  input  wire  [15:0]              out_y2_x0_rdata_i, // Memory Read Data
+  //   out_y3_x0_o
+  output logic                     out_y3_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(8191)-1:0]  out_y3_x0_addr_o,  // Memory Address
+  input  wire  [15:0]              out_y3_x0_rdata_i, // Memory Read Data
+  //   out_y4_x0_o
+  output logic                     out_y4_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(4095)-1:0]  out_y4_x0_addr_o,  // Memory Address
+  input  wire  [15:0]              out_y4_x0_rdata_i  // Memory Read Data
 );
 
 // TODO
@@ -84,3 +86,11 @@ endmodule // all_rom4_mux
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================

@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 from functools import cached_property
 
 import ucdp as u
-from ucdp_addr.addrspace import RW, Access
+from ucdp_addr.access import RW, Access
 from ucdp_glbl.lane import Lane
 
 from .mem import AMemMod

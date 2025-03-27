@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -332,7 +332,7 @@ class Segmentation(u.Object):
         width = self.width
         if not max_width:
             return (width,)
-        x_width = int(math.ceil(width / max_width))
+        x_width = math.ceil(width / max_width)
         if (width % x_width) == 0:
             return (width // x_width,) * x_width
 
@@ -399,7 +399,7 @@ def _split_depth(depth, max_depth, offset=0):
 
     def split(d):
         remainder = (d % max_depth) or max_depth
-        y_d = int(math.ceil(d / max_depth))
+        y_d = math.ceil(d / max_depth)
         return [max_depth] * (y_d - 1) + [remainder]
 
     aligned_limited_segs = [split(int(addrrange.size)) for addrrange in num.split_aligned_segs(offset, depth)]

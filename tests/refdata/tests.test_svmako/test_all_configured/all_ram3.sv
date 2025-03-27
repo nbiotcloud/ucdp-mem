@@ -1,12 +1,14 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -49,21 +51,21 @@
 `default_nettype none  // implicit wires are forbidden
 
 module all_ram3 ( // tests.test_svmako.RamMod
-  // main_i
-  input  wire                     main_clk_i,
+  // main_i: Clock and Reset
+  input  wire                     main_clk_i,      // Clock
   input  wire                     main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
-  // io_main_i
-  input  wire                     io_main_ena_i,
-  input  wire  [$clog2(4095)-1:0] io_main_addr_i,
-  input  wire                     io_main_wena_i,
-  input  wire  [15:0]             io_main_wdata_i,
-  output logic [15:0]             io_main_rdata_o,
+  //   io_main_i
+  input  wire                     io_main_ena_i,   // Memory Access Enable
+  input  wire  [$clog2(4095)-1:0] io_main_addr_i,  // Memory Address
+  input  wire                     io_main_wena_i,  // Memory Write Enable
+  input  wire  [15:0]             io_main_wdata_i, // Memory Write Data
+  output logic [15:0]             io_main_rdata_o, // Memory Read Data
   // pwr_i
-  // pwr_one_i
-  input  wire                     pwr_one_pwr_i,
-  // pwr_two_i
-  input  wire                     pwr_two_pwr_i
+  //   pwr_one_i
+  input  wire                     pwr_one_pwr_i,   // Enable
+  //   pwr_two_i
+  input  wire                     pwr_two_pwr_i    // Enable
   // tech_i
 );
 
@@ -73,47 +75,50 @@ module all_ram3 ( // tests.test_svmako.RamMod
   //  Signals
   // ------------------------------------------------------
   // mem_s
-  // mem_y0_x0_s
-  logic                    mem_y0_x0_ena_s;
-  logic [$clog2(2047)-1:0] mem_y0_x0_addr_s;
-  logic                    mem_y0_x0_wena_s;
-  logic [15:0]             mem_y0_x0_wdata_s;
-  logic [15:0]             mem_y0_x0_rdata_s;
-  // mem_y1_x0_s
-  logic                    mem_y1_x0_ena_s;
-  logic [$clog2(2047)-1:0] mem_y1_x0_addr_s;
-  logic                    mem_y1_x0_wena_s;
-  logic [15:0]             mem_y1_x0_wdata_s;
-  logic [15:0]             mem_y1_x0_rdata_s;
+  //   mem_y0_x0_s
+  logic                    mem_y0_x0_ena_s;   // Memory Access Enable
+  logic [$clog2(2047)-1:0] mem_y0_x0_addr_s;  // Memory Address
+  logic                    mem_y0_x0_wena_s;  // Memory Write Enable
+  logic [15:0]             mem_y0_x0_wdata_s; // Memory Write Data
+  logic [15:0]             mem_y0_x0_rdata_s; // Memory Read Data
+  //   mem_y1_x0_s
+  logic                    mem_y1_x0_ena_s;   // Memory Access Enable
+  logic [$clog2(2047)-1:0] mem_y1_x0_addr_s;  // Memory Address
+  logic                    mem_y1_x0_wena_s;  // Memory Write Enable
+  logic [15:0]             mem_y1_x0_wdata_s; // Memory Write Data
+  logic [15:0]             mem_y1_x0_rdata_s; // Memory Read Data
 
 
   // ------------------------------------------------------
   //  tests.all_ram3_mux: u_mux
   // ------------------------------------------------------
   all_ram3_mux u_mux (
-    // in_i
-    // in_main_i
-    .in_main_ena_i    (io_main_ena_i    ),
-    .in_main_addr_i   (io_main_addr_i   ),
-    .in_main_wena_i   (io_main_wena_i   ),
-    .in_main_wdata_i  (io_main_wdata_i  ),
-    .in_main_rdata_o  (io_main_rdata_o  ),
-    // out_o
-    // out_y0_x0_o
-    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ),
-    .out_y0_x0_addr_o (mem_y0_x0_addr_s ),
-    .out_y0_x0_wena_o (mem_y0_x0_wena_s ),
-    .out_y0_x0_wdata_o(mem_y0_x0_wdata_s),
-    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s),
-    // out_y1_x0_o
-    .out_y1_x0_ena_o  (mem_y1_x0_ena_s  ),
-    .out_y1_x0_addr_o (mem_y1_x0_addr_s ),
-    .out_y1_x0_wena_o (mem_y1_x0_wena_s ),
-    .out_y1_x0_wdata_o(mem_y1_x0_wdata_s),
-    .out_y1_x0_rdata_i(mem_y1_x0_rdata_s)
+    .in_main_ena_i    (io_main_ena_i    ), // Memory Access Enable
+    .in_main_addr_i   (io_main_addr_i   ), // Memory Address
+    .in_main_wena_i   (io_main_wena_i   ), // Memory Write Enable
+    .in_main_wdata_i  (io_main_wdata_i  ), // Memory Write Data
+    .in_main_rdata_o  (io_main_rdata_o  ), // Memory Read Data
+    .out_y0_x0_ena_o  (mem_y0_x0_ena_s  ), // Memory Access Enable
+    .out_y0_x0_addr_o (mem_y0_x0_addr_s ), // Memory Address
+    .out_y0_x0_wena_o (mem_y0_x0_wena_s ), // Memory Write Enable
+    .out_y0_x0_wdata_o(mem_y0_x0_wdata_s), // Memory Write Data
+    .out_y0_x0_rdata_i(mem_y0_x0_rdata_s), // Memory Read Data
+    .out_y1_x0_ena_o  (mem_y1_x0_ena_s  ), // Memory Access Enable
+    .out_y1_x0_addr_o (mem_y1_x0_addr_s ), // Memory Address
+    .out_y1_x0_wena_o (mem_y1_x0_wena_s ), // Memory Write Enable
+    .out_y1_x0_wdata_o(mem_y1_x0_wdata_s), // Memory Write Data
+    .out_y1_x0_rdata_i(mem_y1_x0_rdata_s)  // Memory Read Data
   );
 
 endmodule // all_ram3
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================

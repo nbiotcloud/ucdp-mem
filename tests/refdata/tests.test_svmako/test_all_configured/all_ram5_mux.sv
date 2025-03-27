@@ -1,12 +1,14 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -47,43 +49,43 @@
 
 module all_ram5_mux ( // tests.test_svmako.SegMuxMod
   // in_i
-  // in_main_i
-  input  wire                      in_main_ena_i,
-  input  wire  [$clog2(10239)-1:0] in_main_addr_i,
-  input  wire                      in_main_wena_i,
-  input  wire  [17:0]              in_main_wdata_i,
-  output logic [17:0]              in_main_rdata_o,
+  //   in_main_i
+  input  wire                      in_main_ena_i,     // Memory Access Enable
+  input  wire  [$clog2(10239)-1:0] in_main_addr_i,    // Memory Address
+  input  wire                      in_main_wena_i,    // Memory Write Enable
+  input  wire  [17:0]              in_main_wdata_i,   // Memory Write Data
+  output logic [17:0]              in_main_rdata_o,   // Memory Read Data
   // out_o
-  // out_y0_x0_o
-  output logic                     out_y0_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y0_x0_addr_o,
-  output logic                     out_y0_x0_wena_o,
-  output logic [19:0]              out_y0_x0_wdata_o,
-  input  wire  [19:0]              out_y0_x0_rdata_i,
-  // out_y1_x0_o
-  output logic                     out_y1_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y1_x0_addr_o,
-  output logic                     out_y1_x0_wena_o,
-  output logic [19:0]              out_y1_x0_wdata_o,
-  input  wire  [19:0]              out_y1_x0_rdata_i,
-  // out_y2_x0_o
-  output logic                     out_y2_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y2_x0_addr_o,
-  output logic                     out_y2_x0_wena_o,
-  output logic [19:0]              out_y2_x0_wdata_o,
-  input  wire  [19:0]              out_y2_x0_rdata_i,
-  // out_y3_x0_o
-  output logic                     out_y3_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y3_x0_addr_o,
-  output logic                     out_y3_x0_wena_o,
-  output logic [19:0]              out_y3_x0_wdata_o,
-  input  wire  [19:0]              out_y3_x0_rdata_i,
-  // out_y4_x0_o
-  output logic                     out_y4_x0_ena_o,
-  output logic [$clog2(2047)-1:0]  out_y4_x0_addr_o,
-  output logic                     out_y4_x0_wena_o,
-  output logic [19:0]              out_y4_x0_wdata_o,
-  input  wire  [19:0]              out_y4_x0_rdata_i
+  //   out_y0_x0_o
+  output logic                     out_y0_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y0_x0_addr_o,  // Memory Address
+  output logic                     out_y0_x0_wena_o,  // Memory Write Enable
+  output logic [19:0]              out_y0_x0_wdata_o, // Memory Write Data
+  input  wire  [19:0]              out_y0_x0_rdata_i, // Memory Read Data
+  //   out_y1_x0_o
+  output logic                     out_y1_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y1_x0_addr_o,  // Memory Address
+  output logic                     out_y1_x0_wena_o,  // Memory Write Enable
+  output logic [19:0]              out_y1_x0_wdata_o, // Memory Write Data
+  input  wire  [19:0]              out_y1_x0_rdata_i, // Memory Read Data
+  //   out_y2_x0_o
+  output logic                     out_y2_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y2_x0_addr_o,  // Memory Address
+  output logic                     out_y2_x0_wena_o,  // Memory Write Enable
+  output logic [19:0]              out_y2_x0_wdata_o, // Memory Write Data
+  input  wire  [19:0]              out_y2_x0_rdata_i, // Memory Read Data
+  //   out_y3_x0_o
+  output logic                     out_y3_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y3_x0_addr_o,  // Memory Address
+  output logic                     out_y3_x0_wena_o,  // Memory Write Enable
+  output logic [19:0]              out_y3_x0_wdata_o, // Memory Write Data
+  input  wire  [19:0]              out_y3_x0_rdata_i, // Memory Read Data
+  //   out_y4_x0_o
+  output logic                     out_y4_x0_ena_o,   // Memory Access Enable
+  output logic [$clog2(2047)-1:0]  out_y4_x0_addr_o,  // Memory Address
+  output logic                     out_y4_x0_wena_o,  // Memory Write Enable
+  output logic [19:0]              out_y4_x0_wdata_o, // Memory Write Data
+  input  wire  [19:0]              out_y4_x0_rdata_i  // Memory Read Data
 );
 
 // TODO
@@ -92,3 +94,11 @@ endmodule // all_ram5_mux
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================

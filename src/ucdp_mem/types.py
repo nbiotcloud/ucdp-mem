@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ from ucdp_addr.util import calc_depth_size
 from ucdp_glbl.lane import Lanes
 from ucdp_glbl.mem import MemIoType, SliceWidths
 
-__all__ = ["MemIoType", "LanesMemIoType", "MemPwrType", "MemTechType"]
+__all__ = ["LanesMemIoType", "MemIoType", "MemPwrType", "MemTechType"]
 
 
 class LanesMemIoType(u.AStructType):

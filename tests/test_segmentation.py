@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import ucdp as u
 from pytest import raises
 from ucdp import Slice
 from ucdp_glbl.lane import Lane
+
 from ucdp_mem import MemTechConstraints
 from ucdp_mem.segmentation import Segment, Segmentation
 
