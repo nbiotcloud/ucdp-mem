@@ -1,12 +1,14 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -48,18 +50,18 @@
 `default_nettype none  // implicit wires are forbidden
 
 module all_otp0 ( // tests.test_svmako.OtpMod
-  // main_i
-  input  wire                   main_clk_i,
+  // main_i: Clock and Reset
+  input  wire                   main_clk_i,      // Clock
   input  wire                   main_rst_an_i,   // Async Reset (Low-Active)
   // io_i
-  // io_main_i
-  input  wire                   io_main_ena_i,
-  input  wire  [$clog2(99)-1:0] io_main_addr_i,
-  input  wire                   io_main_wena_i,
-  input  wire  [7:0]            io_main_wdata_i,
-  output logic [7:0]            io_main_rdata_o
+  //   io_main_i
+  input  wire                   io_main_ena_i,   // Memory Access Enable
+  input  wire  [$clog2(99)-1:0] io_main_addr_i,  // Memory Address
+  input  wire                   io_main_wena_i,  // Memory Write Enable
+  input  wire  [7:0]            io_main_wdata_i, // Memory Write Data
+  output logic [7:0]            io_main_rdata_o  // Memory Read Data
   // pwr_i
-  // pwr_main_i
+  //   pwr_main_i
   // tech_i
 );
 
@@ -68,3 +70,11 @@ endmodule // all_otp0
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================

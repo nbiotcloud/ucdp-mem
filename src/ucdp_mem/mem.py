@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,8 @@ from functools import cached_property
 import ucdp as u
 from makolator.helper import indent
 from pydantic import PositiveInt
-from ucdp_addr.addrspace import RO, Access, Addrspace
+from ucdp_addr.access import RO, Access
+from ucdp_addr.addrspace import Addrspace
 from ucdp_addr.util import calc_depth_size
 from ucdp_glbl.lane import Lane, Lanes, fill_lanes
 from ucdp_glbl.mem import calc_slicewidths
@@ -89,7 +90,7 @@ class AMemMod(u.ATailoredMod):
         accesslanes = fill_lanes(accesslanes, size, default=True)
         powerlanes = fill_lanes(powerlanes, size, default=True)
         if slicewidth and slicewidths:
-            raise ValueError("'slicewidth' and 'slicewidths' are mutally exclusive.")
+            raise ValueError("'slicewidth' and 'slicewidths' are mutually exclusive.")
         if slicewidth:
             slicewidths = calc_slicewidths(width, slicewidth)
         super().__init__(
